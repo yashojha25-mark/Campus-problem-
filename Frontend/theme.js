@@ -1,14 +1,13 @@
 (function () {
     const THEME_STORAGE_KEY = "campusTheme";
     const LANGUAGE_STORAGE_KEY = "campusLanguage";
-    const AUTH_STORAGE_KEY = "campusAuthSession";
     const NAV_ITEMS = [
-        { href: "index.html", key: "home", icon: "🏠" },
-        { href: "about.html", key: "about", icon: "ℹ️" },
-        { href: "explore.html", key: "explore", icon: "🖼️" },
-        { href: "complain.html", key: "complain", icon: "📝" },
-        { href: "feedback.html", key: "feedback", icon: "⭐" },
-        { href: "contact.html", key: "contact", icon: "☎️" }
+        { href: "index.html", key: "home" },
+        { href: "about.html", key: "about" },
+        { href: "explore.html", key: "explore" },
+        { href: "complain.html", key: "complain" },
+        { href: "feedback.html", key: "feedback" },
+        { href: "contact.html", key: "contact" }
     ];
 
     const COPY = {
@@ -22,12 +21,12 @@
                 contact: "Contact"
             },
             ui: {
-                signIn: "🔐 Sign In",
-                signUp: "✨ Sign Up",
-                dark: "🌙 Dark",
-                light: "☀ Light",
+                signIn: "Sign In",
+                signUp: "Sign Up",
+                dark: "Dark",
+                light: "Light",
                 languageToggle: "Hindi",
-                back: "← Back",
+                back: "Back",
                 goBack: "Go back",
                 switchToDark: "Switch to dark mode",
                 switchToLight: "Switch to light mode",
@@ -58,9 +57,9 @@
                     title: "Campus Complaint & Maintenance Portal",
                     subtitle: "Boys Hostel, Girls Hostel<br>and Campus Problems.",
                     description: "View hostel and campus-related issues at NavGurukul and raise a complaint from one place.",
-                    primaryAction: "📝 Report Problem",
-                    secondaryAction: "👀 View Options",
-                    supportBadge: "🛟 NavGurukul Support",
+                    primaryAction: "Report Problem",
+                    secondaryAction: "View Options",
+                    supportBadge: "NavGurukul Support",
                     supportTitle: "Select Your Problem",
                     supportDescription: "Choose a problem category so the hostel or campus support team can receive the update easily.",
                     problemCards: [
@@ -73,16 +72,16 @@
                     sidePanelLabel: "User Problem Panel",
                     searchLabel: "Search Or Write Complaint",
                     searchPlaceholder: "Search issue or write your complaint",
-                    galleryBadge: "🖼️ Campus Gallery",
+                    galleryBadge: "Campus Gallery",
                     galleryTitle: "NavGurukul Photos",
                     galleryDescription: "View campus and hostel photos here. Click any photo to update the hero image."
                 },
                 about: {
-                    heroBadge: "ℹ️ About the Portal",
+                    heroBadge: "About the Portal",
                     heroTitle: "Built for faster campus support.",
                     heroDescription: "Report hostel or campus issues, track progress, and get clear updates without the back-and-forth.",
-                    primaryAction: "📝 Report a Problem",
-                    secondaryAction: "⚙️ See How It Works",
+                    primaryAction: "Report a Problem",
+                    secondaryAction: "See How It Works",
                     statOneValue: "3",
                     statOneLabel: "simple steps from issue to resolution",
                     statTwoValue: "24/7",
@@ -107,12 +106,12 @@
                     stepTwoDescription: "The support team checks the complaint and updates the progress when action starts.",
                     stepThreeTitle: "Resolve",
                     stepThreeDescription: "Once the issue is handled, the case is closed with a clear outcome.",
-                    promiseBadge: "🤝 Our Promise",
+                    promiseBadge: "Our Promise",
                     promiseTitle: "Less friction. More action. Better campus support.",
                     promiseDescription: "We want this portal to feel calm, trustworthy, and practical for every student who needs help."
                 },
                 contact: {
-                    title: "📞 Contact Us",
+                    title: "Contact Us",
                     description: "Have questions about how to use the portal? Reach out to our support team.",
                     infoTitle: "Get in Touch",
                     infoDescription: "If you prefer not to use the form, you can reach us directly via email or phone.",
@@ -122,14 +121,14 @@
                     namePlaceholder: "Your name",
                     emailPlaceholder: "Your email",
                     messagePlaceholder: "How can we help you?",
-                    submit: "📩 Send Message",
+                    submit: "Send Message",
                     emailLabel: "Email:",
                     phoneLabel: "Phone:",
                     hoursLabel: "Hours:",
                     hoursValue: "Mon - Sat, 9:00 AM - 8:00 PM"
                 },
                 feedback: {
-                    title: "💬 Feedback Form",
+                    title: "Feedback Form",
                     description: "Write your feedback here",
                     name: "Name",
                     email: "Email",
@@ -141,25 +140,25 @@
                     descriptionPlaceholder: "Write your feedback here...",
                     counterSuffix: "Characters",
                     info: "Maximum 2000 characters allowed",
-                    submit: "⭐ Send Feedback",
+                    submit: "Send Feedback",
                     success: "Feedback Submitted Successfully!"
                 },
                 auth: {
-                    loginTitle: "🔐 Login",
-                    signupTitle: "✨ Sign Up",
-                    forgotTitle: "🔒 Forgot Password",
+                    loginTitle: "Login",
+                    signupTitle: "Sign Up",
+                    forgotTitle: "Forgot Password",
                     username: "Username:",
                     email: "Email:",
                     password: "Password:",
                     confirmPassword: "Confirm Password:",
                     newPassword: "New Password:",
-                    forgotLink: "Forgot your password? 🔒",
+                    forgotLink: "Forgot your password?",
                     noAccount: "Don't have an account?",
                     alreadyAccount: "Already have an account?",
                     rememberPassword: "Remembered password?",
-                    loginButton: "🔐 Login",
-                    signupButton: "✨ Sign Up",
-                    recoverButton: "🛠️ Recover Password",
+                    loginButton: "Login",
+                    signupButton: "Sign Up",
+                    recoverButton: "Recover Password",
                     usernamePlaceholder: "username",
                     emailPlaceholder: "email",
                     passwordPlaceholder: "password",
@@ -167,17 +166,17 @@
                     newPasswordPlaceholder: "new password"
                 },
                 complain: {
-                    eyebrow: "📝 Complaint Desk",
-                    title: "🚨 Campus Problems",
-                    openForm: "✍️ Write Complaint",
+                    eyebrow: "Complaint Desk",
+                    title: "Campus Problems",
+                    openForm: "Write Complaint",
                     allFilter: "All",
                     campusFilter: "Campus",
                     boysFilter: "Boys Hostel",
                     girlsFilter: "Girls Hostel",
                     emptyTitle: "No complaints yet",
                     emptyDescription: "Once a complaint is submitted, it will appear here with title, description, photo, and status.",
-                    formEyebrow: "🆕 New Complaint",
-                    formTitle: "📤 Submit Problem",
+                    formEyebrow: "New Complaint",
+                    formTitle: "Submit Problem",
                     closeLabel: "Close form",
                     name: "Name",
                     email: "Email",
@@ -196,11 +195,11 @@
                     descriptionLabel: "Description",
                     descriptionPlaceholder: "Problem detail likho...",
                     photoLabel: "Upload Photo",
-                    submit: "🚨 Submit Complaint",
+                    submit: "Submit Complaint",
                     success: "Complaint submitted successfully."
                 },
                 explore: {
-                    eyebrow: "🖼️ Campus Gallery",
+                    eyebrow: "Campus Gallery",
                     title: "Explore NavGurukul Photos",
                     description: "Campus, hostel, activity, and student life photos will appear here. Add more photos inside the gallery whenever you send them.",
                     campus: "Campus",
@@ -478,94 +477,6 @@
         return saved === "hi" ? "hi" : "en";
     }
 
-    function getStoredUser() {
-        try {
-            const raw = localStorage.getItem(AUTH_STORAGE_KEY) || localStorage.getItem("user");
-            return raw ? JSON.parse(raw) : null;
-        } catch {
-            return null;
-        }
-    }
-
-    function isAuthenticated() {
-        return Boolean(localStorage.getItem(AUTH_STORAGE_KEY));
-    }
-
-    function getUserDisplayName(user) {
-        if (!user) {
-            return "";
-        }
-
-        if (user.name && user.name.trim()) {
-            return user.name.trim();
-        }
-
-        if (user.email && user.email.includes("@")) {
-            return user.email.split("@")[0];
-        }
-
-        return "User";
-    }
-
-    function getUserInitials(user) {
-        const name = getUserDisplayName(user);
-        const parts = name.split(/\s+/).filter(Boolean);
-        const initials = parts.slice(0, 2).map((part) => part[0] || "").join("").toUpperCase();
-
-        return initials || "U";
-    }
-
-    function hashString(value) {
-        let hash = 0;
-        for (let index = 0; index < value.length; index += 1) {
-            hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
-        }
-        return hash;
-    }
-
-    function buildAvatarDataUrl(user) {
-        const seed = `${user?.email || ""}|${user?.name || ""}`;
-        const hash = hashString(seed || "campus");
-        const palette = [
-            ["#f59e0b", "#b45309"],
-            ["#0f766e", "#115e59"],
-            ["#7c3aed", "#6d28d9"],
-            ["#2563eb", "#1d4ed8"],
-            ["#db2777", "#be185d"]
-        ];
-        const colors = palette[hash % palette.length];
-        const initials = getUserInitials(user);
-        const svg = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
-                <defs>
-                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="${colors[0]}"/>
-                        <stop offset="100%" stop-color="${colors[1]}"/>
-                    </linearGradient>
-                </defs>
-                <rect width="96" height="96" rx="30" fill="url(#g)"/>
-                <circle cx="74" cy="22" r="10" fill="rgba(255,255,255,0.18)"/>
-                <text x="48" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">${initials}</text>
-            </svg>
-        `.trim();
-
-        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-    }
-
-    function getAuthUser() {
-        const sessionUser = getStoredUser();
-
-        if (!sessionUser || !isAuthenticated()) {
-            return null;
-        }
-
-        return sessionUser;
-    }
-
-    function isAuthPage(page = getCurrentPage()) {
-        return ["login.html", "signup.html", "forgot.html"].includes(page);
-    }
-
     function lookup(path, language = state.language) {
         const keys = path.split(".");
         let current = COPY[language];
@@ -644,35 +555,12 @@
 
         return `
             <a href="${item.href}" class="${activeClass.trim()}">
-                <span class="nav-icon" aria-hidden="true">${item.icon}</span>
-                <span class="nav-label">${label}</span>
+                ${label}
             </a>
         `;
     }
 
-    function buildProfileMarkup(user) {
-        const avatar = buildAvatarDataUrl(user);
-        const displayName = getUserDisplayName(user);
-        const email = user?.email || "";
-        const hiddenAttribute = user ? "" : " hidden";
-
-        return `
-            <div class="auth-controls auth-controls--user"${hiddenAttribute}>
-                <div class="profile-chip" title="${displayName}${email ? ` • ${email}` : ""}">
-                    <img class="profile-avatar" src="${avatar}" alt="${displayName}">
-                    <div class="profile-meta">
-                        <strong>${displayName}</strong>
-                        <span>${email}</span>
-                    </div>
-                </div>
-                <button class="profile-logout" type="button">${state.language === "hi" ? "🚪 लॉग आउट" : "🚪 Logout"}</button>
-            </div>
-        `;
-    }
-
     function buildAuthMarkup() {
-        const currentUser = getAuthUser();
-        const guestHidden = currentUser ? " hidden" : "";
         return `
             <div class="hp-auth auth-actions">
                 <button class="theme-toggle" type="button" aria-label="${lookup("ui.switchToDark") || "Switch to dark mode"}" aria-pressed="false">
@@ -682,11 +570,8 @@
                 <button class="language-link language-toggle" type="button" aria-label="${state.language === "en" ? lookup("ui.switchToHindi") : lookup("ui.switchToEnglish")}">
                     ${lookup("ui.languageToggle")}
                 </button>
-                <div class="auth-controls auth-controls--guest"${guestHidden}>
-                    <a class="auth-link signin-link" href="login.html">${lookup("ui.signIn")}</a>
-                    <a class="auth-link hp-signup" href="signup.html">${lookup("ui.signUp")}</a>
-                </div>
-                ${buildProfileMarkup(currentUser)}
+                <a class="auth-link signin-link" href="login.html">${lookup("ui.signIn")}</a>
+                <a class="auth-link hp-signup" href="signup.html">${lookup("ui.signUp")}</a>
             </div>
         `;
     }
@@ -745,7 +630,6 @@
         const menuClose = header.querySelector(".menu-close");
         const navLinks = header.querySelectorAll(".nav-list a");
         const languageToggle = header.querySelector(".language-toggle");
-        const profileLogout = header.querySelector(".profile-logout");
 
         navLinks.forEach((link) => {
             link.classList.toggle("active", link.getAttribute("href") === currentPage);
@@ -776,14 +660,6 @@
                 setLanguage(state.language === "en" ? "hi" : "en");
             });
         }
-
-        if (profileLogout) {
-            profileLogout.addEventListener("click", () => {
-                localStorage.removeItem(AUTH_STORAGE_KEY);
-                document.body.classList.remove("auth-locked");
-                window.location.href = "login.html";
-            });
-        }
     }
 
     function updateNavbarText() {
@@ -796,42 +672,17 @@
         header.querySelectorAll(".nav-list a").forEach((link) => {
             const href = link.getAttribute("href");
             const matched = NAV_ITEMS.find((item) => item.href === href);
-            const label = link.querySelector(".nav-label");
 
             if (matched) {
-                const translated = lookup(`nav.${matched.key}`);
-
-                if (label) {
-                    label.textContent = translated;
-                } else {
-                    link.textContent = translated;
-                }
+                link.textContent = lookup(`nav.${matched.key}`);
             }
             link.classList.toggle("active", href === getCurrentPage());
         });
 
-        const signIn = header.querySelector(".signin-link");
-        const signUp = header.querySelector(".hp-signup");
         const themeToggle = header.querySelector(".theme-toggle");
         const themeText = header.querySelector(".theme-text");
         const themeIcon = header.querySelector(".theme-icon");
         const languageToggle = header.querySelector(".language-toggle");
-        const profileChip = header.querySelector(".profile-chip");
-        const profileName = header.querySelector(".profile-meta strong");
-        const profileEmail = header.querySelector(".profile-meta span");
-        const profileAvatar = header.querySelector(".profile-avatar");
-        const profileLogout = header.querySelector(".profile-logout");
-        const authGuest = header.querySelector(".auth-controls--guest");
-        const authUser = header.querySelector(".auth-controls--user");
-        const currentUser = getAuthUser();
-
-        if (signIn) {
-            signIn.textContent = lookup("ui.signIn");
-        }
-
-        if (signUp) {
-            signUp.textContent = lookup("ui.signUp");
-        }
 
         if (themeToggle) {
             const isDark = document.body.classList.contains("dark-mode");
@@ -852,35 +703,6 @@
                 "aria-label",
                 state.language === "en" ? lookup("ui.switchToHindi") : lookup("ui.switchToEnglish")
             );
-        }
-
-        if (authGuest) {
-            authGuest.hidden = Boolean(currentUser);
-        }
-
-        if (authUser) {
-            authUser.hidden = !currentUser;
-        }
-
-        if (currentUser && profileChip) {
-            profileChip.title = `${getUserDisplayName(currentUser)}${currentUser.email ? ` • ${currentUser.email}` : ""}`;
-        }
-
-        if (profileName && currentUser) {
-            profileName.textContent = getUserDisplayName(currentUser);
-        }
-
-        if (profileEmail && currentUser) {
-            profileEmail.textContent = currentUser.email || "";
-        }
-
-        if (profileAvatar && currentUser) {
-            profileAvatar.src = buildAvatarDataUrl(currentUser);
-            profileAvatar.alt = getUserDisplayName(currentUser);
-        }
-
-        if (profileLogout) {
-            profileLogout.textContent = state.language === "hi" ? "🚪 लॉग आउट" : "🚪 Logout";
         }
     }
 
@@ -1303,53 +1125,6 @@
         }
     }
 
-    function addAuthGate() {
-        const currentPage = getCurrentPage();
-
-        if (isAuthenticated() || isAuthPage(currentPage) || document.querySelector(".auth-gate")) {
-            document.body.classList.remove("auth-locked");
-            return;
-        }
-
-        document.body.classList.add("auth-locked");
-
-        const gate = document.createElement("section");
-        gate.className = "auth-gate";
-        gate.innerHTML = `
-            <div class="auth-gate__backdrop" aria-hidden="true"></div>
-            <div class="auth-gate__card" role="dialog" aria-modal="true" aria-label="Authentication required">
-                <div class="auth-gate__icon" aria-hidden="true">🔒</div>
-                <span class="auth-gate__eyebrow">${state.language === "hi" ? "सिर्फ़ सदस्यों के लिए" : "Members only"}</span>
-                <h2>${state.language === "hi" ? "पहले साइन इन या साइन अप करें" : "Sign in or create an account first"}</h2>
-                <p>${state.language === "hi"
-                    ? "साइट के सभी पेज खोलने से पहले आपका अकाउंट चाहिए।"
-                    : "You need an account before opening the site pages."
-                }</p>
-                <div class="auth-gate__actions">
-                    <a class="auth-gate__button auth-gate__button--primary" href="login.html">🔐 ${state.language === "hi" ? "साइन इन" : "Sign In"}</a>
-                    <a class="auth-gate__button auth-gate__button--secondary" href="signup.html">✨ ${state.language === "hi" ? "साइन अप" : "Sign Up"}</a>
-                </div>
-                <div class="auth-gate__chips">
-                    <span>🖼️ ${state.language === "hi" ? "गैलरी" : "Gallery"}</span>
-                    <span>📝 ${state.language === "hi" ? "शिकायत" : "Complaint"}</span>
-                    <span>📞 ${state.language === "hi" ? "संपर्क" : "Contact"}</span>
-                </div>
-            </div>
-        `;
-
-        document.body.insertAdjacentElement("afterbegin", gate);
-    }
-
-    function removeAuthGate() {
-        const gate = document.querySelector(".auth-gate");
-
-        if (gate) {
-            gate.remove();
-        }
-
-        document.body.classList.remove("auth-locked");
-    }
-
     function addBackButton() {
         const currentPage = getCurrentPage();
 
@@ -1439,7 +1214,6 @@
         applyPageTranslations();
         addMotionClasses();
         applyTheme(getSavedTheme());
-        addAuthGate();
 
         const toggle = getToggle();
         toggle.addEventListener("click", function () {

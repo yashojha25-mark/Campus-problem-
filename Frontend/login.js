@@ -2,7 +2,6 @@ const signupButton = document.getElementById("sign");
 const loginButton = document.getElementById("btn");
 const recoverButton = document.getElementById("recover");
 const passwordToggles = document.querySelectorAll(".toggle-password");
-const AUTH_STORAGE_KEY = "campusAuthSession";
 const i18n = new Proxy({}, {
   get: (_, prop) => window.campusI18n?.[prop]
 });
@@ -31,12 +30,6 @@ function clearUserInfo() {
   });
 }
 
-function saveSession(user) {
-  localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-  window.dispatchEvent(new CustomEvent("campus-auth-change", { detail: { user } }));
-}
-
 if (signupButton) {
   signupButton.addEventListener("click", function () {
     const name = getInputValue("name");
@@ -55,7 +48,7 @@ if (signupButton) {
     }
 
     const user = { name, email, password };
-    saveSession(user);
+    localStorage.setItem("user", JSON.stringify(user));
 
     showMessage(i18n?.messages.signupDone() || "Signup done");
     clearUserInfo();
@@ -126,7 +119,6 @@ if (recoverButton) {
 
     user.password = newPassword;
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
     showMessage(i18n?.messages.recoverUpdated() || "Password updated");
     clearUserInfo();
 
@@ -155,7 +147,7 @@ if (loginButton) {
       email === user.email &&
       password === user.password
     ) {
-      saveSession(user);
+      localStorage.setItem("user", JSON.stringify(user));
       showMessage(i18n?.messages.loginDone() || "Login done");
       clearUserInfo();
       window.location.href = "index.html";

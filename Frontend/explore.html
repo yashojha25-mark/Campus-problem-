@@ -5,9 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore Campus</title>
     <link rel="stylesheet" href="explore.css">
-    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="common.css">
 </head>
-<body>
+<body class="shared-layout">
+    <header class="site-header">
+        <div class="container">
+            <a class="brand" href="index.html" aria-label="NavGurukul home">
+                <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
+            </a>
+
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+            <nav id="navigation">
+                <div class="nav-panel-top">
+                    <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
+                    <button class="menu-close" type="button" aria-label="Close navigation">×</button>
+                </div>
+
+                <ul class="nav-list hp-nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="complain.html">Complain</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hp-auth">
+                <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                    <span class="theme-icon" aria-hidden="true">☾</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+                <button class="language-link language-toggle" type="button" aria-label="Switch to Hindi">Hindi</button>
+                <a class="auth-link signin-link" href="login.html">Sign In</a>
+                <a href="signup.html" class="auth-link hp-signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
     <main class="explore-page">
         <section class="explore-hero">
             <p class="eyebrow">Campus Gallery</p>
@@ -66,6 +100,6 @@
         </section>
     </main>
 
-    <script src="theme.js"></script>
+    <script src="nav.js"></script>
 </body>
 </html>
