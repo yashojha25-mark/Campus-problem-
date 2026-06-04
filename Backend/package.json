@@ -1,6 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
+<<<<<<< HEAD
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+=======
   "description": "Campus Problems backend authentication API",
   "type": "module",
   "main": "server.js",
@@ -8,11 +15,15 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "watch": "node --watch server.js"
+>>>>>>> 2485289b790261e47f272481910be048a21eb38e
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+    "express": "^5.2.1"
+=======
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -23,5 +34,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
+>>>>>>> 2485289b790261e47f272481910be048a21eb38e
   }
 }

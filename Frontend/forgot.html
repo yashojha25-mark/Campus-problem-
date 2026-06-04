@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="forgot">
+        <h2>Forgot Password</h2>
+
+        <label for="email">Email:</label>
+        <input id="email" type="email" placeholder="email">
+
+        <label for="new-password">New password:</label>
+        <div class="password-field">
+            <input id="new-password" type="password" placeholder="new password">
+            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+        </div>
+
+        <label for="confirm-password">Confirm password:</label>
+        <div class="password-field">
+            <input id="confirm-password" type="password" placeholder="confirm password">
+            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+        </div>
+
+        <button id="recover">Recover Password</button>
+
+        <p id="message"></p>
+
+        <p>
+            Remembered password?
+            <a href="login.html" class="btn">Login</a>
+        </p>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
