@@ -26,6 +26,7 @@ let activeFilter = 'All';
 let selectedPhoto = '';
 
 renderComplaints();
+updatePlaceFields();
 
 openFormBtn.addEventListener('click', () => {
 	openForm();
@@ -46,21 +47,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 placeInput.addEventListener('change', () => {
-	const isCampus = placeInput.value === 'Campus';
-	const isHostel = placeInput.value === 'Girls hostel' || placeInput.value === 'Boys hostel';
-	houseField.hidden = !isCampus;
-	houseInput.required = isCampus;
-	hostelAreaField.hidden = !isHostel;
-	hostelAreaInput.required = isHostel;
-	if (!isCampus) {
-		houseInput.value = '';
-	}
-	if (!isHostel) {
-		hostelAreaInput.value = '';
-		roomNumberInput.value = '';
-		roomField.hidden = true;
-		roomNumberInput.required = false;
-	}
+	updatePlaceFields();
 });
 
 hostelAreaInput.addEventListener('change', () => {
@@ -140,6 +127,7 @@ function openForm() {
 	modalBackdrop.hidden = false;
 	formPanel.hidden = false;
 	document.body.style.overflow = 'hidden';
+	updatePlaceFields();
 	document.getElementById('name').focus();
 }
 
@@ -156,6 +144,51 @@ function loadComplaints() {
 
 function saveComplaints() {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(complaints));
+}
+
+function updatePlaceFields() {
+	if (placeInput.value === 'Campus') {
+		houseField.hidden = false;
+		houseInput.required = true;
+
+		hostelAreaField.hidden = true;
+		hostelAreaInput.required = false;
+		hostelAreaInput.value = '';
+
+		roomField.hidden = true;
+		roomNumberInput.value = '';
+		roomNumberInput.required = false;
+		return;
+	}
+
+	if (placeInput.value === 'Girls hostel' || placeInput.value === 'Boys hostel') {
+		houseField.hidden = true;
+		houseInput.required = false;
+		houseInput.value = '';
+
+		hostelAreaField.hidden = false;
+		hostelAreaInput.required = true;
+
+		const isRoom = hostelAreaInput.value === 'Room';
+		roomField.hidden = !isRoom;
+		roomNumberInput.required = isRoom;
+		if (!isRoom) {
+			roomNumberInput.value = '';
+		}
+		return;
+	}
+
+	houseField.hidden = true;
+	houseInput.required = false;
+	houseInput.value = '';
+
+	hostelAreaField.hidden = true;
+	hostelAreaInput.required = false;
+	hostelAreaInput.value = '';
+
+	roomField.hidden = true;
+	roomNumberInput.value = '';
+	roomNumberInput.required = false;
 }
 
 function renderComplaints() {
