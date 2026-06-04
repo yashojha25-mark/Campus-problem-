@@ -3,14 +3,14 @@
 }
 
 :root {
-  --ink: #3b2415;
-  --muted: #82614d;
-  --line: rgba(155, 91, 38, 0.16);
-  --primary: #f28c28;
-  --primary-dark: #a84f13;
-  --accent: #ffbd6f;
-  --surface: rgba(255, 255, 255, 0.9);
-  --shadow: 0 22px 55px rgba(155, 91, 38, 0.16);
+  --ink: #111827;
+  --muted: #64748b;
+  --line: rgba(203, 213, 225, 0.9);
+  --primary: #f59e0b;
+  --primary-dark: #b45309;
+  --accent: #14b8a6;
+  --surface: rgba(255, 255, 255, 0.94);
+  --shadow: 0 22px 55px rgba(15, 23, 42, 0.12);
 }
 
 body {
@@ -18,9 +18,7 @@ body {
   min-height: 100vh;
   font-family: "Segoe UI", Arial, sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(255, 189, 111, 0.34), transparent 32rem),
-    linear-gradient(135deg, #fffaf4 0%, #fff2df 48%, #ffffff 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 52%, #fff7ed 100%);
 }
 
 .contact-section {
@@ -71,7 +69,7 @@ body {
   margin: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.72);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
   animation: fadeUp 760ms ease 120ms both;
@@ -102,8 +100,8 @@ body {
 .contact-info:hover,
 .contact-form-box:hover {
   transform: translateY(-4px);
-  border-color: rgba(242, 140, 40, 0.36);
-  box-shadow: 0 18px 42px rgba(155, 91, 38, 0.18);
+  border-color: rgba(245, 158, 11, 0.34);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.13);
 }
 
 .contact-info h3 {
@@ -117,16 +115,16 @@ body {
   min-height: 46px;
   margin: 14px 0 0;
   padding: 13px 14px;
-  color: #4d3324;
-  background: rgba(242, 140, 40, 0.08);
-  border: 1px solid rgba(242, 140, 40, 0.16);
+  color: #334155;
+  background: #f8fafc;
+  border: 1px solid rgba(203, 213, 225, 0.9);
   border-radius: 8px;
   transition: transform 180ms ease, background-color 180ms ease;
 }
 
 .info-item:hover {
   transform: translateX(6px);
-  background: rgba(255, 189, 111, 0.18);
+  background: #fff7ed;
 }
 
 .info-item strong {
@@ -145,7 +143,7 @@ body {
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #4d3324;
+  color: #334155;
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -154,7 +152,7 @@ body {
 .form-group textarea {
   width: 100%;
   padding: 13px 14px;
-  border: 1px solid rgba(155, 91, 38, 0.2);
+  border: 1px solid rgba(203, 213, 225, 0.95);
   border-radius: 8px;
   background: #ffffff;
   color: var(--ink);
@@ -170,13 +168,13 @@ body {
 
 .form-group input:hover,
 .form-group textarea:hover {
-  border-color: rgba(242, 140, 40, 0.52);
+  border-color: rgba(245, 158, 11, 0.46);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(242, 140, 40, 0.18);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
   transform: translateY(-1px);
 }
 
@@ -190,7 +188,7 @@ body {
   margin-bottom: 16px !important;
   padding: 12px 14px;
   border-radius: 8px;
-  background: rgba(255, 189, 111, 0.2);
+  background: #fff7ed;
   font-weight: 700;
 }
 
@@ -209,14 +207,14 @@ body {
   overflow: hidden;
   padding: 14px 20px;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  box-shadow: 0 12px 28px rgba(242, 140, 40, 0.28);
+  background: linear-gradient(135deg, var(--primary), #fbbf24);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.24);
   font-size: 1rem;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(242, 140, 40, 0.36);
+  box-shadow: 0 16px 34px rgba(245, 158, 11, 0.3);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -230,25 +228,25 @@ body {
 }
 
 .submit-btn.sending {
-  background: linear-gradient(135deg, #b36a2f, var(--primary));
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
 }
 
 .toggle-btn {
   margin: 0 0 18px !important;
   padding: 8px 12px !important;
   color: var(--primary-dark);
-  background: rgba(242, 140, 40, 0.11) !important;
-  border: 1px solid rgba(242, 140, 40, 0.22) !important;
+  background: #fff7ed !important;
+  border: 1px solid rgba(245, 158, 11, 0.24) !important;
 }
 
 .toggle-btn:hover {
   transform: translateY(-1px);
-  background: rgba(242, 140, 40, 0.18) !important;
+  background: rgba(245, 158, 11, 0.18) !important;
 }
 
 .submit-btn:focus-visible,
 .toggle-btn:focus-visible {
-  outline: 3px solid rgba(242, 140, 40, 0.35);
+  outline: 3px solid rgba(245, 158, 11, 0.32);
   outline-offset: 3px;
 }
 

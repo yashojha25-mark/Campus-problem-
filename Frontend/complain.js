@@ -20,6 +20,9 @@ const previewImage = document.getElementById('previewImage');
 const removePhotoBtn = document.getElementById('removePhotoBtn');
 const message = document.getElementById('message');
 const filterButtons = document.querySelectorAll('.filter-btn');
+const i18n = new Proxy({}, {
+	get: (_, prop) => window.campusI18n?.[prop]
+});
 
 let complaints = loadComplaints();
 let activeFilter = 'All';
@@ -117,7 +120,7 @@ complaintForm.addEventListener('submit', (event) => {
 	resetForm();
 	closeForm();
 
-	message.textContent = 'Complaint submitted successfully.';
+	message.textContent = i18n?.messages.complaintSuccess() || 'Complaint submitted successfully.';
 	setTimeout(() => {
 		message.textContent = '';
 	}, 2500);

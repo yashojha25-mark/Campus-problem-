@@ -5,7 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Campus Complaints</title>
 	<link rel="stylesheet" href="complain.css">
+<<<<<<< HEAD
 	<link rel="stylesheet" href="common.css">
+=======
+    <link rel="stylesheet" href="theme.css">
+>>>>>>> aman
 </head>
 <body class="shared-layout">
 	<header class="site-header">
@@ -79,17 +83,17 @@
 
 			<form id="complaintForm" class="form">
 				<label>
-					Name
+					<span class="field-label">Name</span>
 					<input type="text" id="name" name="name" placeholder="Your name" required>
 				</label>
 
 				<label>
-					Email
+					<span class="field-label">Email</span>
 					<input type="email" id="email" name="email" placeholder="Your email" required>
 				</label>
 
 				<label>
-					Place
+					<span class="field-label">Place</span>
 					<select id="place" name="place" required>
 						<option value="">Select place</option>
 						<option value="Campus">Campus</option>
@@ -99,7 +103,7 @@
 				</label>
 
 				<label id="houseField" hidden>
-					Campus House
+					<span class="field-label">Campus House</span>
 					<select id="house" name="house">
 						<option value="">Select house</option>
 						<option value="Malhar House">Malhar House</option>
@@ -109,7 +113,11 @@
 				</label>
 
 				<label id="hostelAreaField" hidden>
+<<<<<<< HEAD
 					Dining Hall / Room
+=======
+					<span class="field-label">Hostel Area</span>
+>>>>>>> aman
 					<select id="hostelArea" name="hostelArea">
 						<option value="">Select Dining Hall or Room</option>
 						<option value="Dining Hall">Dining Hall</option>
@@ -118,12 +126,12 @@
 				</label>
 
 				<label id="roomField" hidden>
-					Room Number
+					<span class="field-label">Room Number</span>
 					<input type="text" id="roomNumber" name="roomNumber" placeholder="Room number">
 				</label>
 
 				<label>
-					Problem Type
+					<span class="field-label">Problem Type</span>
 					<select id="problemType" name="problemType" required>
 						<option value="">Select problem</option>
 						<option value="Water leakage">Water leakage</option>
@@ -137,17 +145,22 @@
 				</label>
 
 				<label>
+<<<<<<< HEAD
 					Title
 					<input type="text" id="title" name="title" placeholder="Short complaint title / room no." required>
+=======
+					<span class="field-label">Title</span>
+					<input type="text" id="title" name="title" placeholder="Short complaint title" required>
+>>>>>>> aman
 				</label>
 
 				<label>
-					Description
+					<span class="field-label">Description</span>
 					<textarea id="description" name="description" placeholder="Problem detail likho..." rows="5" required></textarea>
 				</label>
 
 				<label>
-					Upload Photo
+					<span class="field-label">Upload Photo</span>
 					<input type="file" id="photo" name="photo" accept="image/*">
 				</label>
 
@@ -179,5 +192,6 @@
 
 	<script src="nav.js"></script>
 	<script src="complain.js"></script>
+    <script src="theme.js"></script>
 </body>
 </html>

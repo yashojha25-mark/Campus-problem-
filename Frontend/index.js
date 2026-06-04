@@ -20,13 +20,45 @@ const galleryItems = document.querySelectorAll(".gallery-item");
 const navLinks = document.querySelectorAll(".nav-list a");
 const menuToggle = document.querySelector(".menu-toggle");
 const menuClose = document.querySelector(".menu-close");
-const themeToggle = document.querySelector(".theme-toggle");
-const themeIcon = document.querySelector(".theme-icon");
-const themeText = document.querySelector(".theme-text");
+const leftArrow = document.querySelector(".left");
+const rightArrow = document.querySelector(".right");
+const i18n = new Proxy({}, {
+    get: (_, prop) => window.campusI18n?.[prop]
+});
 
 let index = 0;
 let selectedLocation = "Boys Hostel";
-const savedTheme = localStorage.getItem("campusTheme") || "light";
+
+function getProblemDisplayName(problemName){
+    if (i18n?.getLanguage() !== "hi") {
+        return problemName;
+    }
+
+    const map = {
+        "Water leakage": "पानी रिसाव",
+        "Fan not working": "पंखा काम नहीं कर रहा",
+        "Electricity issues": "बिजली की समस्या",
+        "WiFi issues": "वाई-फाई समस्या",
+        "Cleanliness concerns": "सफाई की चिंता",
+        "Furniture damage": "फर्नीचर क्षति"
+    };
+
+    return map[problemName] || problemName;
+}
+
+function getLocationDisplayName(locationName) {
+    if (i18n?.getLanguage() !== "hi") {
+        return locationName;
+    }
+
+    const map = {
+        "Boys Hostel": "लड़कों का हॉस्टल",
+        "Girls Hostel": "लड़कियों का हॉस्टल",
+        Campus: "कैम्पस"
+    };
+
+    return map[locationName] || locationName;
+}
 
 function changeSlide(i){
     index = i;
@@ -43,15 +75,19 @@ function changeSlide(i){
     });
 }
 
-document.querySelector(".right").onclick = () =>{
-    index = (index + 1) % images.length;
-    changeSlide(index);
-};
+if (rightArrow) {
+    rightArrow.onclick = () => {
+        index = (index + 1) % images.length;
+        changeSlide(index);
+    };
+}
 
-document.querySelector(".left").onclick = () =>{
-    index = (index - 1 + images.length) % images.length;
-    changeSlide(index);
-};
+if (leftArrow) {
+    leftArrow.onclick = () => {
+        index = (index - 1 + images.length) % images.length;
+        changeSlide(index);
+    };
+}
 
 setInterval(()=>{
     index = (index + 1) % images.length;
@@ -60,6 +96,7 @@ setInterval(()=>{
 
 function setLocation(card){
     const isSameLocation = selectedLocation === card.dataset.location && card.classList.contains("active");
+    const isHindi = i18n?.getLanguage() === "hi";
 
     if(isSameLocation){
         sideProblemPanel.hidden = false;
@@ -72,30 +109,41 @@ function setLocation(card){
     card.classList.add("active");
 
     if(problemType.value.trim()){
-        problemMessage.textContent = `${problemType.value.trim()} status is Active for ${selectedLocation}.`;
+        problemMessage.textContent = isHindi
+            ? `${getProblemDisplayName(problemType.value.trim())} ${getLocationDisplayName(selectedLocation)} के लिए सक्रिय है।`
+            : `${problemType.value.trim()} status is Active for ${selectedLocation}.`;
         updateProblemList(problemType.value);
         return;
     }
 
-    problemMessage.textContent = `Put cursor in User Problem Panel to see ${selectedLocation} problems.`;
+    problemMessage.textContent = isHindi
+        ? `${getLocationDisplayName(selectedLocation)} की समस्याएँ देखने के लिए यूज़र समस्या पैनल पर जाएँ।`
+        : `Put cursor in User Problem Panel to see ${selectedLocation} problems.`;
     updateProblemList("");
 }
 
 function showProblemSelection(){
     sideProblemPanel.hidden = false;
-    sidePanelTitle.textContent = `${selectedLocation} Problems`;
+    sidePanelTitle.textContent = i18n?.getLanguage() === "hi"
+        ? `${getLocationDisplayName(selectedLocation)} की समस्याएँ`
+        : `${selectedLocation} Problems`;
 }
 
 function updateProblemMessage(problem){
     const cleanProblem = problem.trim();
+    const isHindi = i18n?.getLanguage() === "hi";
 
     if(!cleanProblem){
-        problemMessage.textContent = `Put cursor in User Problem Panel to see ${selectedLocation} problems.`;
+        problemMessage.textContent = isHindi
+            ? `${getLocationDisplayName(selectedLocation)} की समस्याएँ देखने के लिए यूज़र समस्या पैनल पर जाएँ।`
+            : `Put cursor in User Problem Panel to see ${selectedLocation} problems.`;
         updateProblemList("");
         return;
     }
 
-    problemMessage.textContent = `${cleanProblem} status is Active for ${selectedLocation}.`;
+    problemMessage.textContent = isHindi
+        ? `${getProblemDisplayName(cleanProblem)} ${getLocationDisplayName(selectedLocation)} के लिए सक्रिय है।`
+        : `${cleanProblem} status is Active for ${selectedLocation}.`;
     problemMessage.classList.add("updated");
     updateProblemList(cleanProblem);
 
@@ -187,6 +235,19 @@ function setActiveNavigation(){
     });
 }
 
+function translateHomeCopy(){
+    const issueLabels = document.querySelectorAll(".side-issue-list li");
+    const issueCopy = i18n?.getLanguage() === "hi"
+        ? ["पानी रिसाव", "पंखा काम नहीं कर रहा", "बिजली की समस्या", "वाई-फाई समस्या", "सफाई की चिंता", "फर्नीचर क्षति"]
+        : ["Water leakage", "Fan not working", "Electricity issues", "WiFi issues", "Cleanliness concerns", "Furniture damage"];
+
+    issueLabels.forEach((item, index) => {
+        if (issueCopy[index]) {
+            item.textContent = issueCopy[index];
+        }
+    });
+}
+
 function openNavigation(){
     document.body.classList.add("nav-open");
     menuToggle.setAttribute("aria-expanded", "true");
@@ -197,22 +258,8 @@ function closeNavigation(){
     menuToggle.setAttribute("aria-expanded", "false");
 }
 
-function applyTheme(theme){
-    const isDark = theme === "dark";
-
-    document.body.classList.toggle("dark-mode", isDark);
-    themeToggle.setAttribute("aria-pressed", String(isDark));
-    themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-    themeIcon.textContent = isDark ? "☀" : "☾";
-    themeText.textContent = isDark ? "Light" : "Dark";
-    localStorage.setItem("campusTheme", theme);
-}
-
 menuToggle.addEventListener("click", openNavigation);
 menuClose.addEventListener("click", closeNavigation);
-themeToggle.addEventListener("click", () => {
-    applyTheme(document.body.classList.contains("dark-mode") ? "light" : "dark");
-});
 
 document.addEventListener("keydown", event => {
     if(event.key === "Escape"){
@@ -220,5 +267,15 @@ document.addEventListener("keydown", event => {
     }
 });
 
-applyTheme(savedTheme);
 setActiveNavigation();
+document.addEventListener("DOMContentLoaded", translateHomeCopy);
+
+window.addEventListener("campus-language-change", () => {
+    translateHomeCopy();
+    if (!sideProblemPanel.hidden) {
+        showProblemSelection();
+        if (problemType.value.trim()) {
+            updateProblemMessage(problemType.value);
+        }
+    }
+});
