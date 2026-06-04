@@ -1,0 +1,158 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(135deg,#f3f0ff,#f9f7ff);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.container{
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.icon{
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: #f4efff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}
+
+h1{
+    text-align: center;
+    color: #1d2340;
+    font-size: 30px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.container p{
+    text-align: center;
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.success-message{
+    display: none;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+input,
+textarea{
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e7e3ff;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    background: #fff;
+}
+
+input:focus,
+textarea:focus{
+    border-color: #8b5cf6;
+    box-shadow: 0 0 10px rgba(139,92,246,0.15);
+}
+
+textarea{
+    min-height: 100px;
+    resize: none;
+}
+
+.counter{
+    text-align: right;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #777;
+}
+
+.info{
+    margin-top: 5px;
+    font-size: 11px;
+    color: #888;
+}
+
+button{
+    margin-top: 18px;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    background-color: orange;
+    /* background: linear-gradient(90deg, #6d5dfc, #9b5cf7, #ff5fa2); */
+    transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(155,92,247,0.35);
+}
+
+button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(155,92,247,0.45);
+}
+
+button:active{
+    transform: scale(0.98);
+}
+
+@media (max-width: 600px){
+
+    .container{
+        padding: 20px;
+    }
+
+    h1{
+        font-size: 26px;
+    }
+
+    input,
+    textarea{
+        font-size: 14px;
+    }
+
+    button{
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
