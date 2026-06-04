@@ -1,158 +1,367 @@
-body{
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    background: linear-gradient(135deg,#f3f0ff,#f9f7ff);
-}
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+/* ============================================================
+   Feedback Page — design matches complain.css
+   ============================================================ */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', Arial, sans-serif;
 }
 
-.container{
-    width: 100%;
-    max-width: 550px;
-    background: rgba(255,255,255,0.95);
-    padding: 25px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+body {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #fff7ed 0%, #eef3f8 42%, #ffffff 100%);
+	color: #1f2937;
 }
 
-.icon{
-    width: 65px;
-    height: 65px;
-    margin: auto;
-    margin-bottom: 12px;
-    border-radius: 50%;
-    background: #f4efff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
+/* ── Top bar ─────────────────────────────────────────────── */
+.site-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 24px;
+	background: #ffffff;
+	border-bottom: 1px solid #d9e2ec;
 }
 
-h1{
-    text-align: center;
-    color: #1d2340;
-    font-size: 30px;
-    margin-bottom: 6px;
-    font-weight: 700;
+.site-bar-link {
+	color: #ea580c;
+	text-decoration: none;
+	font-weight: 600;
 }
 
-.container p{
-    text-align: center;
-    color: #6b7280;
-    font-size: 15px;
-    margin-bottom: 20px;
+/* ── Shared element resets ───────────────────────────────── */
+button,
+input,
+select,
+textarea {
+	font: inherit;
 }
 
-.success-message{
-    display: none;
-    background: #d1fae5;
-    color: #065f46;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 14px;
-    font-weight: 600;
+button {
+	cursor: pointer;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
+/* ── Page wrapper ────────────────────────────────────────── */
+.page {
+	width: 100%;
+	min-height: 100vh;
+	padding: 24px;
 }
 
-label{
-    font-size: 15px;
-    font-weight: 600;
-    color: #222;
-    margin-top: 8px;
-    margin-bottom: 6px;
+/* ── Main panel (mirrors .complaints-panel) ──────────────── */
+.feedback-panel {
+	background: #ffffff;
+	border: 1px solid #d9e2ec;
+	border-radius: 8px;
+	box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+	min-height: calc(100vh - 48px);
+	padding: 28px;
+	width: min(1280px, 100%);
+	margin: 0 auto;
+}
+
+/* ── Panel header ────────────────────────────────────────── */
+.panel-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+}
+
+.eyebrow {
+	color: #ea580c;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 4px;
+}
+
+h1 {
+	font-size: 30px;
+	line-height: 1.2;
+	color: #111827;
+}
+
+h2 {
+	font-size: 21px;
+	line-height: 1.25;
+	color: #111827;
+}
+
+/* ── Primary button / submit button ─────────────────────── */
+.primary-action,
+.submit-btn {
+	border: 0;
+	border-radius: 8px;
+	background: #f97316;
+	color: #ffffff;
+	font-weight: 700;
+	padding: 12px 18px;
+	box-shadow: 0 10px 22px rgba(249, 115, 22, 0.22);
+	transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-action:hover,
+.submit-btn:hover {
+	background: #ea580c;
+	box-shadow: 0 14px 26px rgba(234, 88, 12, 0.28);
+	transform: translateY(-2px);
+}
+
+.primary-action:disabled,
+.submit-btn:disabled {
+	opacity: 0.6;
+	transform: none;
+	cursor: not-allowed;
+}
+
+/* ── State messages ──────────────────────────────────────── */
+.list-message {
+	padding: 12px 0;
+	color: #64748b;
+	font-size: 14px;
+}
+
+/* ── Feedback list grid ──────────────────────────────────── */
+.feedback-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: 16px;
+	margin-top: 24px;
+}
+
+/* ── Individual feedback card ────────────────────────────── */
+.feedback-item {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 16px;
+	border: 1px solid #d9e2ec;
+	border-radius: 8px;
+	background: #ffffff;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feedback-item:hover {
+	border-color: #fdba74;
+	box-shadow: 0 16px 34px rgba(15, 23, 42, 0.1);
+	transform: translateY(-2px);
+}
+
+.feedback-item h3 {
+	font-size: 18px;
+	color: #111827;
+	line-height: 1.3;
+}
+
+.feedback-item small {
+	display: block;
+	color: #6b7280;
+	font-size: 12px;
+}
+
+.feedback-item .desc {
+	color: #334155;
+	font-size: 14px;
+	line-height: 1.55;
+	max-height: 84px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.read-more {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 600;
+	color: #ea580c;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 2px 0;
+	transition: color 0.15s;
+}
+
+.read-more:hover {
+	color: #c2410c;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.empty-state {
+	border: 1px dashed #94a3b8;
+	border-radius: 8px;
+	padding: 34px 18px;
+	text-align: center;
+	background: #f8fafc;
+	color: #475569;
+	margin-top: 24px;
+}
+
+.empty-state h2 {
+	margin-bottom: 8px;
+}
+
+/* ── Modal backdrop ──────────────────────────────────────── */
+.modal-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 10;
+	background: rgba(15, 23, 42, 0.45);
+	backdrop-filter: blur(4px);
+}
+
+/* ── Sliding form panel (identical to complain.css) ─────── */
+.form-panel {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 11;
+	width: min(560px, calc(100% - 28px));
+	max-height: calc(100vh - 36px);
+	overflow: auto;
+	padding: 22px;
+	background: #ffffff;
+	border: 1px solid #d9e2ec;
+	border-radius: 8px;
+	box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+	transform: translate(-50%, -50%) scale(0.97);
+	animation: formPop 0.2s ease forwards;
+}
+
+.form-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+}
+
+.close-btn {
+	width: 36px;
+	height: 36px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #ffffff;
+	color: #475569;
+	font-weight: 700;
+	font-size: 18px;
+	transition: border-color 0.15s, color 0.15s;
+}
+
+.close-btn:hover {
+	border-color: #fb923c;
+	color: #ea580c;
+}
+
+/* ── Form inside panel ───────────────────────────────────── */
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-top: 20px;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-weight: 700;
+	color: #374151;
 }
 
 input,
-textarea{
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e7e3ff;
-    border-radius: 12px;
-    font-size: 15px;
-    outline: none;
-    transition: 0.3s;
-    background: #fff;
+textarea {
+	width: 100%;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #ffffff;
+	color: #111827;
+	outline: none;
+	padding: 11px 12px;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea {
+	resize: vertical;
+	min-height: 110px;
 }
 
 input:focus,
-textarea:focus{
-    border-color: #8b5cf6;
-    box-shadow: 0 0 10px rgba(139,92,246,0.15);
+textarea:focus {
+	border-color: #f97316;
+	box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.16);
 }
 
-textarea{
-    min-height: 100px;
-    resize: none;
+/* Character counter */
+.char-row {
+	display: flex;
+	justify-content: flex-end;
+	font-size: 12px;
+	color: #6b7280;
+	margin-top: -8px;
 }
 
-.counter{
-    text-align: right;
-    margin-top: 5px;
-    font-size: 12px;
-    color: #777;
+/* Success / error inline message inside form */
+.form-message {
+	padding: 10px 12px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	text-align: center;
 }
 
-.info{
-    margin-top: 5px;
-    font-size: 11px;
-    color: #888;
+.form-message.success {
+	background: #d1fae5;
+	color: #065f46;
 }
 
-button{
-    margin-top: 18px;
-    border: none;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    color: white;
-    background-color: orange;
-    /* background: linear-gradient(90deg, #6d5dfc, #9b5cf7, #ff5fa2); */
-    transition: 0.3s;
-    box-shadow: 0 8px 20px rgba(155,92,247,0.35);
+.form-message.error {
+	background: #fee2e2;
+	color: #b91c1c;
 }
 
-button:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(155,92,247,0.45);
+/* ── Form open animation ─────────────────────────────────── */
+@keyframes formPop {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -46%) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
 }
 
-button:active{
-    transform: scale(0.98);
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 860px) {
+	.page {
+		padding: 14px;
+	}
+
+	.feedback-panel {
+		min-height: auto;
+		padding: 18px;
+	}
+
+	.form-panel {
+		width: min(520px, calc(100% - 20px));
+	}
 }
 
-@media (max-width: 600px){
+@media (max-width: 560px) {
+	.panel-header,
+	.form-header {
+		align-items: stretch;
+		flex-direction: column;
+	}
 
-    .container{
-        padding: 20px;
-    }
+	h1 {
+		font-size: 25px;
+	}
 
-    h1{
-        font-size: 26px;
-    }
-
-    input,
-    textarea{
-        font-size: 14px;
-    }
-
-    button{
-        font-size: 16px;
-        padding: 12px;
-    }
+	.feedback-list {
+		grid-template-columns: 1fr;
+	}
 }
-

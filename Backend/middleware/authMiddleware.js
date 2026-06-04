@@ -40,4 +40,27 @@ const protect = async (req, res, next) => {
   }
 };
 
-export { protect };
+const optionalAuth = async (req, res, next) => {
+	try {
+		const authHeader = req.headers.authorization;
+		const token = authHeader && authHeader.startsWith('Bearer ')
+			? authHeader.split(' ')[1]
+			: null;
+
+		if (!token) {
+			return next();
+		}
+
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+		const user = await User.findById(decoded.userId);
+		if (user) {
+			req.user = user;
+		}
+	} catch {
+		// Ignore invalid tokens for public routes that optionally enrich the request.
+	}
+
+	return next();
+};
+
+export { protect, optionalAuth };

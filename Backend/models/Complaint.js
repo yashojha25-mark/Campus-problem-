@@ -30,6 +30,12 @@ const complaintSchema = new mongoose.Schema(
       required: true,
       // examples: 'room', 'cleaning', 'maintenance', 'other'
     },
+    area: {
+      type: String,
+      enum: ['girls-hostel', 'boys-hostel', 'campus'],
+      default: 'campus',
+      index: true,
+    },
     roomNumber: {
       type: String,
       // only required when type === 'room'
@@ -38,8 +44,25 @@ const complaintSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ['pending', 'in-progress', 'resolved'],
+      default: 'pending',
+      index: true,
+    },
+    resolvedAt: {
+      type: Date,
+      default: null,
+    },
+    imageUrl: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
+
+complaintSchema.index({ user: 1, createdAt: -1 });
+complaintSchema.index({ area: 1, status: 1 });
 
 export default mongoose.model('Complaint', complaintSchema);

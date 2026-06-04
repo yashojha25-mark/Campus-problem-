@@ -11,6 +11,31 @@ body {
 	color: #1f2937;
 }
 
+.site-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 24px;
+	background: #ffffff;
+	border-bottom: 1px solid #d9e2ec;
+}
+
+.site-bar-link {
+	color: #ea580c;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.loading-state {
+	padding: 12px 0;
+	color: #64748b;
+}
+
+.message.error {
+	color: #c0392b;
+}
+
 button,
 input,
 select,

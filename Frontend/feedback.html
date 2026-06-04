@@ -1,53 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback Form</title>
-    <link rel="stylesheet" href="feedback.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Feedback — Campus Problems</title>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="feedback.css">
 </head>
 <body>
 
-    <div class="container">
+	<!-- Top navigation bar (same structure as complain.html) -->
+	<header class="site-bar">
+		<a href="index.html" class="site-bar-link">← Home</a>
+		<strong>Feedback</strong>
+		<a href="#" id="logoutLink" class="site-bar-link">Logout</a>
+	</header>
 
-        <div class="icon">📑</div>
+	<main class="page">
+		<section class="feedback-panel">
 
-        <h1>Feedback Form</h1>
-        <p>Write your feedback here</p>
+			<!-- Header row with title + open-form button -->
+			<div class="panel-header">
+				<div>
+					<p class="eyebrow">Feedback Desk</p>
+					<h1>Campus Feedback</h1>
+				</div>
+				<button type="button" class="primary-action" id="openFormBtn">+ Add Feedback</button>
+			</div>
 
-        <div id="successMessage" class="success-message">
-            🎉 Feedback Submitted Successfully!
-        </div>
+			<!-- Loading / empty / list states -->
+			<p class="list-message" id="listMessage" hidden></p>
 
-        <form id="Feedbackform">
+			<div class="empty-state" id="emptyState" hidden>
+				<h2>No feedback yet</h2>
+				<p>Submit feedback and it will appear here for everyone to read.</p>
+			</div>
 
-            <label>Name</label>
-            <input type="text" id="name" placeholder="Enter your name" required>
+			<div class="feedback-list" id="feedbackList"></div>
 
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
+		</section>
 
-            <label>Title</label>
-            <input type="text" id="title" placeholder="Enter feedback title" required>
+		<!-- Modal backdrop -->
+		<div class="modal-backdrop" id="modalBackdrop" hidden></div>
 
-            <label>Description</label>
-            <textarea id="description" placeholder="Write your feedback here..." maxlength="2000" required></textarea>
+		<!-- Slide-in form panel (same structure as complain.html) -->
+		<aside class="form-panel" id="formPanel" aria-label="Feedback form" hidden>
 
-            <div class="counter">
-                <span id="charCount">0</span>/2000 Characters
-            </div>
+			<div class="form-header">
+				<div>
+					<p class="eyebrow">New Feedback</p>
+					<h2>Submit Feedback</h2>
+				</div>
+				<button type="button" class="close-btn" id="closeFormBtn" aria-label="Close form">✕</button>
+			</div>
 
-            <small class="info">
-                Maximum 2000 characters allowed
-            </small>
+			<!-- Inline success / error message -->
+			<div id="formMessage" class="form-message" hidden></div>
 
-            <button type="submit">➤ Send Feedback </button>
+			<form id="Feedbackform" class="form" novalidate>
 
-        </form>
+				<label>
+					Name
+					<input type="text" id="name" name="name" placeholder="Your name" required>
+				</label>
 
-    </div>
+				<label>
+					Email
+					<input type="email" id="email" name="email" placeholder="Your email" required>
+				</label>
 
-    <script src="feedback.js"></script>
+				<label>
+					Title
+					<input type="text" id="title" name="title" placeholder="Short feedback title" required>
+				</label>
 
+				<label>
+					Description
+					<textarea
+						id="description"
+						name="descriptionFeedback"
+						placeholder="Share your experience in detail…"
+						maxlength="2000"
+						rows="5"
+						required
+					></textarea>
+				</label>
+
+				<div class="char-row">
+					<span id="charCount">0</span>&thinsp;/ 2000
+				</div>
+
+				<button type="submit" class="submit-btn">➤ Send Feedback</button>
+
+			</form>
+		</aside>
+	</main>
+
+	<script src="api.js"></script>
+	<script src="auth-ui.js"></script>
+	<script src="feedback.js"></script>
 </body>
 </html>

@@ -1,39 +1,32 @@
 import { validationResult } from 'express-validator';
-import Feedback from '../models/Feedback.js';
+import { sendSuccess } from '../utils/apiResponse.js';
+import * as feedbackService from '../services/feedbackService.js';
 
-// Create feedback for a complaint.
-const createFeedback = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ message: 'Validation failed', errors: errors.array() });
-    }
-
-    const { complaint, name, email, title, descriptionFeedback } = req.body;
-
-    const feedback = await Feedback.create({
-      user: req.user._id,
-      complaint: complaint || undefined,
-      name,
-      email,
-      title,
-      descriptionFeedback,
-    });
-
-    return res.status(201).json({ message: 'Feedback submitted', feedback });
-  } catch (error) {
-    return res.status(500).json({ message: 'Could not submit feedback', error: error.message });
+const validateRequest = (req) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed');
+    error.statusCode = 400;
+    error.errors = errors.array();
+    throw error;
   }
 };
 
-// Get feedback submitted by the logged-in user.
-const getMyFeedback = async (req, res) => {
+export const createFeedback = async (req, res, next) => {
   try {
-    const feedbacks = await Feedback.find({ user: req.user._id }).sort({ createdAt: -1 });
-    return res.status(200).json({ feedbacks });
+    validateRequest(req);
+    const feedback = await feedbackService.createFeedback(req.user._id, req.body);
+    sendSuccess(res, 201, 'Feedback submitted', { feedback });
   } catch (error) {
-    return res.status(500).json({ message: 'Could not fetch feedback', error: error.message });
+    next(error);
   }
 };
 
-export { createFeedback, getMyFeedback };
+export const getMyFeedback = async (req, res, next) => {
+  try {
+    const feedbacks = await feedbackService.getMyFeedback(req.user._id);
+    sendSuccess(res, 200, 'Feedback fetched successfully', { feedbacks });
+  } catch (error) {
+    next(error);
+  }
+};

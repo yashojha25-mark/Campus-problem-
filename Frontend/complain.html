@@ -7,6 +7,11 @@
 	<link rel="stylesheet" href="complain.css">
 </head>
 <body>
+	<header class="site-bar">
+		<a href="index.html" class="site-bar-link">← Home</a>
+		<strong>My Complaints</strong>
+		<a href="#" id="logoutLink" class="site-bar-link">Logout</a>
+	</header>
 	<main class="page">
 		<section class="complaints-panel">
 			<div class="panel-header">
@@ -24,9 +29,11 @@
 				<button type="button" class="filter-btn" data-filter="Girls hostel">Girls Hostel</button>
 			</div>
 
+			<p class="loading-state" id="loadingState" hidden>Loading your complaints...</p>
+
 			<div class="empty-state" id="emptyState" hidden>
 				<h2>No complaints yet</h2>
-				<p>Jab complaint submit hogi, yahin title, description, photo aur status ke saath dikh jayegi.</p>
+				<p>Submit a complaint and it will appear here with status updates from the admin team.</p>
 			</div>
 
 			<div class="complaint-list" id="complaintList"></div>
@@ -128,6 +135,8 @@
 		</aside>
 	</main>
 
+	<script src="api.js"></script>
+	<script src="auth-ui.js"></script>
 	<script src="complain.js"></script>
 </body>
 </html>

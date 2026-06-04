@@ -1,133 +1,205 @@
-const signupButton = document.getElementById("sign");
-const loginButton = document.getElementById("btn");
-const recoverButton = document.getElementById("recover");
-const passwordToggles = document.querySelectorAll(".toggle-password");
+const signupButton = document.getElementById('sign');
+const loginButton = document.getElementById('btn');
+const recoverButton = document.getElementById('recover');
+const passwordToggles = document.querySelectorAll('.toggle-password');
 
-function showMessage(text) {
-  const message = document.getElementById("message");
+function showMessage(text, isError) {
+	const message = document.getElementById('message');
 
-  if (message) {
-    message.innerText = text;
-  } else {
-    alert(text);
-  }
+	if (message) {
+		message.innerText = text;
+		message.style.color = isError ? '#c0392b' : '#1f8a70';
+	} else {
+		alert(text);
+	}
 }
 
 function getInputValue(id) {
-  return document.getElementById(id).value.trim();
+	const input = document.getElementById(id);
+	return input ? input.value.trim() : '';
 }
 
 function clearUserInfo() {
-  ["name", "email", "password", "passw", "new-password", "confirm-password"].forEach(function (id) {
-    const input = document.getElementById(id);
-
-    if (input) {
-      input.value = "";
-    }
-  });
+	['name', 'email', 'password', 'passw', 'new-password', 'confirm-password'].forEach((id) => {
+		const input = document.getElementById(id);
+		if (input) {
+			input.value = '';
+		}
+	});
 }
 
-if (signupButton) {
-  signupButton.addEventListener("click", function () {
-    const name = getInputValue("name");
-    const email = getInputValue("email");
-    const password = getInputValue("password");
-    const confirmPassword = getInputValue("passw");
+function setButtonLoading(button, isLoading, loadingText) {
+	if (!button) {
+		return;
+	}
 
-    if (name === "" || email === "" || password === "" || confirmPassword === "") {
-      showMessage("Please fill all fields");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      showMessage("Passwords do not match");
-      return;
-    }
-
-    const user = { name, email, password };
-    localStorage.setItem("user", JSON.stringify(user));
-
-    showMessage("Signup done");
-    clearUserInfo();
-    window.location.href = "login.html";
-  });
+	button.disabled = isLoading;
+	button.dataset.originalText = button.dataset.originalText || button.textContent;
+	button.textContent = isLoading ? loadingText : button.dataset.originalText;
 }
 
-passwordToggles.forEach(function (toggleButton) {
-  toggleButton.addEventListener("click", function () {
-    const passwordInput = toggleButton.previousElementSibling;
+function getRedirectTarget() {
+	const params = new URLSearchParams(window.location.search);
+	const redirect = params.get('redirect');
+	return redirect && !redirect.includes('://') ? redirect : 'index.html';
+}
 
-    if (!passwordInput) {
-      return;
-    }
+passwordToggles.forEach((toggleButton) => {
+	toggleButton.addEventListener('click', () => {
+		const passwordInput = toggleButton.previousElementSibling;
+		if (!passwordInput) {
+			return;
+		}
 
-    const isHidden = passwordInput.type === "password";
-    passwordInput.type = isHidden ? "text" : "password";
-    toggleButton.setAttribute(
-      "aria-label",
-      isHidden ? "Hide password" : "Show password"
-    );
-  });
+		const isHidden = passwordInput.type === 'password';
+		passwordInput.type = isHidden ? 'text' : 'password';
+		toggleButton.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+	});
 });
 
-if (recoverButton) {
-  recoverButton.addEventListener("click", function () {
-    const email = getInputValue("email");
-    const newPassword = getInputValue("new-password");
-    const confirmPassword = getInputValue("confirm-password");
-    const user = JSON.parse(localStorage.getItem("user"));
+if (signupButton) {
+	signupButton.addEventListener('click', async (e) => {
+		e.preventDefault();
+		const name = getInputValue('name');
+		const email = getInputValue('email');
+		const password = getInputValue('password');
+		const confirmPassword = getInputValue('passw');
 
-    if (email === "" || newPassword === "" || confirmPassword === "") {
-      showMessage("Please fill all fields");
-      return;
-    }
+		if (!name || !email || !password || !confirmPassword) {
+			showMessage('Please fill all fields', true);
+			return;
+		}
 
-    if (!user || email !== user.email) {
-      showMessage("No account found with this email");
-      return;
-    }
+		if (password.length < 6) {
+			showMessage('Password must be at least 6 characters', true);
+			return;
+		}
 
-    if (newPassword !== confirmPassword) {
-      showMessage("Passwords do not match");
-      return;
-    }
+		if (password !== confirmPassword) {
+			showMessage('Passwords do not match', true);
+			return;
+		}
 
-    user.password = newPassword;
-    localStorage.setItem("user", JSON.stringify(user));
-    showMessage("Password updated");
-    clearUserInfo();
+		setButtonLoading(signupButton, true, 'Creating account...');
 
-    setTimeout(function () {
-      window.location.href = "login.html";
-    }, 800);
-  });
+		try {
+			await CampusAPI.register({ name, email, password });
+			showMessage('Account created. You can log in now.', false);
+			clearUserInfo();
+			setTimeout(() => {
+				window.location.href = 'login.html';
+			}, 900);
+		} catch (error) {
+			showMessage(CampusAPI.formatApiError(error), true);
+		} finally {
+			setButtonLoading(signupButton, false, 'Sign Up');
+		}
+	});
 }
 
 if (loginButton) {
-  loginButton.addEventListener("click", function () {
-    const name = getInputValue("name");
-    const email = getInputValue("email");
-    const password = getInputValue("password");
+	loginButton.addEventListener('click', async (e) => {
+		e.preventDefault();
+		const email = getInputValue('email');
+		const password = getInputValue('password');
 
-    if (name === "" || email === "" || password === "") {
-      showMessage("Please fill all fields");
-      return;
-    }
+		if (!email || !password) {
+			showMessage('Please enter email and password', true);
+			return;
+		}
 
-    const user = JSON.parse(localStorage.getItem("user"));
+		setButtonLoading(loginButton, true, 'Signing in...');
 
-    if (
-      user &&
-      name === user.name &&
-      email === user.email &&
-      password === user.password
-    ) {
-      showMessage("Login done");
-      clearUserInfo();
-      window.location.href = "index.html";
-    } else {
-      showMessage("Invalid login details");
-      clearUserInfo();
-    }
-  });
+		try {
+			await CampusAPI.login({ email, password });
+			showMessage('Login successful', false);
+			clearUserInfo();
+			setTimeout(() => {
+				window.location.href = getRedirectTarget();
+			}, 500);
+		} catch (error) {
+			showMessage(CampusAPI.formatApiError(error), true);
+		} finally {
+			setButtonLoading(loginButton, false, 'Login');
+		}
+	});
+}
+
+const requestCodeButton = document.getElementById('requestCode');
+
+if (requestCodeButton) {
+	requestCodeButton.addEventListener('click', async (e) => {
+		e.preventDefault();
+		const email = getInputValue('email');
+
+		if (!email) {
+			showMessage('Enter your email first', true);
+			return;
+		}
+
+		setButtonLoading(requestCodeButton, true, 'Sending code...');
+
+		try {
+			const data = await CampusAPI.requestPasswordReset({ email });
+			let message = data.message || 'If the account exists, a reset code was generated.';
+
+			if (data.resetToken) {
+				message += ` Dev code: ${data.resetToken}`;
+				const resetTokenInput = document.getElementById('resetToken');
+				if (resetTokenInput) {
+					resetTokenInput.value = data.resetToken;
+				}
+			}
+
+			showMessage(message, false);
+		} catch (error) {
+			showMessage(CampusAPI.formatApiError(error), true);
+		} finally {
+			setButtonLoading(requestCodeButton, false, 'Send reset code');
+		}
+	});
+}
+
+if (recoverButton) {
+	recoverButton.addEventListener('click', async (e) => {
+		e.preventDefault();
+		const email = getInputValue('email');
+		const resetToken = getInputValue('resetToken');
+		const password = getInputValue('new-password');
+		const confirmPassword = getInputValue('confirm-password');
+
+		if (!email || !resetToken || !password || !confirmPassword) {
+			showMessage('Fill email, reset code, and both password fields', true);
+			return;
+		}
+
+		if (password.length < 6) {
+			showMessage('Password must be at least 6 characters', true);
+			return;
+		}
+
+		if (password !== confirmPassword) {
+			showMessage('Passwords do not match', true);
+			return;
+		}
+
+		setButtonLoading(recoverButton, true, 'Updating password...');
+
+		try {
+			await CampusAPI.resetPassword({ email, resetToken, password });
+			showMessage('Password updated. Redirecting to login...', false);
+			clearUserInfo();
+			setTimeout(() => {
+				window.location.href = 'login.html';
+			}, 900);
+		} catch (error) {
+			showMessage(CampusAPI.formatApiError(error), true);
+		} finally {
+			setButtonLoading(recoverButton, false, 'Recover Password');
+		}
+	});
+}
+
+if (CampusAPI.isLoggedIn() && loginButton) {
+	window.location.href = getRedirectTarget();
 }

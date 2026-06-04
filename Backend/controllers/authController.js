@@ -1,124 +1,90 @@
-import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
-import User from '../models/User.js';
+import { sendSuccess } from '../utils/apiResponse.js';
+import * as authService from '../services/authService.js';
 
-// Remove the password before sending user data back to the frontend.
-const buildUserResponse = (user) => ({
-  id: user._id,
-  name: user.name,
-  email: user.email,
-  createdAt: user.createdAt,
-  updatedAt: user.updatedAt,
-});
-
-// Create a JWT token after login.
-const createToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  });
-};
-
-const registerUser = async (req, res) => {
-  try {
-    // Check if the request body passes the validation rules.
-    const validationErrors = validationResult(req);
-
-    if (!validationErrors.isEmpty()) {
-      return res.status(400).json({
-        message: 'Validation failed',
-        errors: validationErrors.array(),
-      });
-    }
-
-    const { name, email, password } = req.body;
-
-    // Prevent duplicate accounts with the same email.
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    // Save the new user. The password will be hashed by the model.
-    const user = await User.create({
-      name,
-      email,
-      password,
-    });
-
-    return res.status(201).json({
-      message: 'User registered successfully',
-      user: buildUserResponse(user),
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: 'Registration failed',
-      error: error.message,
-    });
+const validateRequest = (req) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed');
+    error.statusCode = 400;
+    error.errors = errors.array();
+    throw error;
   }
 };
 
-const loginUser = async (req, res) => {
+export const registerUser = async (req, res, next) => {
   try {
-    // Check validation again before trying to log the user in.
-    const validationErrors = validationResult(req);
-
-    if (!validationErrors.isEmpty()) {
-      return res.status(400).json({
-        message: 'Validation failed',
-        errors: validationErrors.array(),
-      });
-    }
-
-    const { email, password } = req.body;
-
-    // Find the user and include the password field only for login check.
-    const user = await User.findOne({ email }).select('+password');
-
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Compare the entered password with the hashed password in the database.
-    const isPasswordValid = await user.comparePassword(password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Send a token back to the frontend after successful login.
-    const token = createToken(user._id);
-
-    return res.status(200).json({
-      message: 'Login successful',
-      token,
-      user: buildUserResponse(user),
-    });
+    validateRequest(req);
+    const data = await authService.registerUser(req.body);
+    sendSuccess(res, 201, 'User registered successfully', data);
   } catch (error) {
-    return res.status(500).json({
-      message: 'Login failed',
-      error: error.message,
-    });
+    next(error);
   }
 };
 
-const getCurrentUser = async (req, res) => {
-  return res.status(200).json({
-    message: 'Current user profile fetched successfully',
-    user: buildUserResponse(req.user),
-  });
+export const loginUser = async (req, res, next) => {
+  try {
+    validateRequest(req);
+    const data = await authService.loginUser(req.body);
+    sendSuccess(res, 200, 'Login successful', data);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const logoutUser = async (req, res) => {
-  // JWT logout happens on the frontend by deleting the stored token.
-  return res.status(200).json({
-    message: 'Logout successful. Remove the token from the frontend storage.',
-  });
+export const getCurrentUser = async (req, res, next) => {
+  try {
+    const data = { user: authService.buildUserResponse(req.user) };
+    sendSuccess(res, 200, 'Current user profile fetched successfully', data);
+  } catch (error) {
+    next(error);
+  }
 };
 
-export {
-  registerUser,
-  loginUser,
-  getCurrentUser,
-  logoutUser,
+export const logoutUser = async (req, res, next) => {
+  try {
+    sendSuccess(res, 200, 'Logout successful. Remove the token from the frontend storage.', null);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProfile = async (req, res, next) => {
+  try {
+    validateRequest(req);
+    const user = await authService.updateProfile(req.user._id, req.body);
+    sendSuccess(res, 200, 'Profile updated successfully', { user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const requestPasswordReset = async (req, res, next) => {
+  try {
+    validateRequest(req);
+    const resetToken = await authService.generatePasswordResetToken(req.body.email);
+    
+    const responseData = {
+      note: 'If an account exists for this email, a reset code has been generated.',
+    };
+
+    if (resetToken && process.env.EXPOSE_PASSWORD_RESET_TOKEN === 'true') {
+      responseData.resetToken = resetToken;
+      responseData.debugNote = 'Reset token is only returned when EXPOSE_PASSWORD_RESET_TOKEN=true (development).';
+    }
+
+    sendSuccess(res, 200, 'Password reset requested', responseData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    validateRequest(req);
+    await authService.resetPassword(req.body);
+    sendSuccess(res, 200, 'Password updated successfully. You can log in now.', null);
+  } catch (error) {
+    next(error);
+  }
 };

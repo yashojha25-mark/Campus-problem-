@@ -10,24 +10,31 @@
     <div class="forgot">
         <h2>Forgot Password</h2>
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" placeholder="email">
+        <form onsubmit="event.preventDefault();">
+            <label for="email">Email:</label>
+            <input id="email" type="email" placeholder="email">
 
-        <label for="new-password">New password:</label>
-        <div class="password-field">
-            <input id="new-password" type="password" placeholder="new password">
-            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
-        </div>
+            <button id="requestCode" type="button" class="btn">Send reset code</button>
 
-        <label for="confirm-password">Confirm password:</label>
-        <div class="password-field">
-            <input id="confirm-password" type="password" placeholder="confirm password">
-            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
-        </div>
+            <label for="resetToken">Reset code:</label>
+            <input id="resetToken" type="text" placeholder="paste code from email or dev response">
 
-        <button id="recover">Recover Password</button>
+            <label for="new-password">New password:</label>
+            <div class="password-field">
+                <input id="new-password" type="password" placeholder="new password">
+                <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+            </div>
 
-        <p id="message"></p>
+            <label for="confirm-password">Confirm password:</label>
+            <div class="password-field">
+                <input id="confirm-password" type="password" placeholder="confirm password">
+                <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+            </div>
+
+            <button type="submit" id="recover">Recover Password</button>
+
+            <p id="message"></p>
+        </form>
 
         <p>
             Remembered password?
@@ -35,6 +42,7 @@
         </p>
     </div>
 
+    <script src="api.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

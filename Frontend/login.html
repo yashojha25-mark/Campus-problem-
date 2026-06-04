@@ -11,23 +11,22 @@
     <div class="container">
         <h1>Login</h1>
 
-        <label for="name">Username:</label>
-        <input id="name" type="text" placeholder="username">
+        <form onsubmit="event.preventDefault();">
+            <label for="email">Email:</label>
+            <input id="email" type="email" placeholder="email">
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" placeholder="email">
+            <label for="password">Password:</label>
+            <div class="password-field">
+                <input id="password" type="password" placeholder="password">
+                <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+            </div>
 
-        <label for="password">Password:</label>
-        <div class="password-field">
-            <input id="password" type="password" placeholder="password">
-            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
-        </div>
+            <a href="forgot.html">Forgot your password?</a>
 
-        <a href="forgot.html">Forgot your password?</a>
+            <button type="submit" id="btn">Login</button>
 
-        <button id="btn">Login</button>
-
-        <p id="message"></p>
+            <p id="message"></p>
+        </form>
 
 
         <p>
@@ -37,6 +36,7 @@
         
     </div>
 
+    <script src="api.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

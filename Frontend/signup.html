@@ -12,28 +12,30 @@
 
         <h2>Sign Up</h2>
 
-        <label for="name">Username:</label>
-        <input id="name" type="text" placeholder="username">
+        <form onsubmit="event.preventDefault();">
+            <label for="name">Username:</label>
+            <input id="name" type="text" placeholder="username">
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" placeholder="email">
+            <label for="email">Email:</label>
+            <input id="email" type="email" placeholder="email">
 
-        <label for="password">Password:</label>
-        <div class="password-field">
-            <input id="password" type="password" placeholder="password">
-            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
-        </div>
-      
-        <label for="passw"> Confirm password:</label>
+            <label for="password">Password:</label>
+            <div class="password-field">
+                <input id="password" type="password" placeholder="password">
+                <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+            </div>
         
-        <div class="password-field">
-            <input id="passw" type="password" placeholder="confirm password">
-            <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
-        </div>
+            <label for="passw"> Confirm password:</label>
+            
+            <div class="password-field">
+                <input id="passw" type="password" placeholder="confirm password">
+                <button class="toggle-password" type="button" aria-label="Show password">&#128065;</button>
+            </div>
 
-         <button id="sign">Sign Up</button>
+            <button type="submit" id="sign">Sign Up</button>
 
-         <p id="message"></p>
+            <p id="message"></p>
+        </form>
 
          <p>
             Already have an account?
@@ -42,6 +44,7 @@
 
     </div>
 
+<script src="api.js"></script>
 <script src="login.js"></script>
 </body>
 </html>

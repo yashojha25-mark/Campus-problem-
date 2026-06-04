@@ -1,4 +1,18 @@
-const STORAGE_KEY = 'campusComplaints';
+const AREA_LABELS = {
+	campus: 'Campus',
+	'boys-hostel': 'Boys hostel',
+	'girls-hostel': 'Girls hostel',
+};
+
+const PROBLEM_TYPE_MAP = {
+	'Water leakage': 'maintenance',
+	'Fan not working': 'maintenance',
+	'Electricity issues': 'electricity',
+	'WiFi issues': 'other',
+	'Cleanliness concerns': 'cleaning',
+	'Furniture damage': 'maintenance',
+	Other: 'other',
+};
 
 const complaintForm = document.getElementById('complaintForm');
 const complaintList = document.getElementById('complaintList');
@@ -20,12 +34,134 @@ const previewImage = document.getElementById('previewImage');
 const removePhotoBtn = document.getElementById('removePhotoBtn');
 const message = document.getElementById('message');
 const filterButtons = document.querySelectorAll('.filter-btn');
+const loadingState = document.getElementById('loadingState');
 
-let complaints = loadComplaints();
+let complaints = [];
 let activeFilter = 'All';
 let selectedPhoto = '';
 
-renderComplaints();
+function showMessage(text, isError) {
+	if (!message) {
+		return;
+	}
+
+	message.textContent = text;
+	message.classList.toggle('error', Boolean(isError));
+}
+
+function mapPlaceToArea(place) {
+	if (place === 'Boys hostel') {
+		return 'boys-hostel';
+	}
+	if (place === 'Girls hostel') {
+		return 'girls-hostel';
+	}
+	return 'campus';
+}
+
+function mapFilterToArea(filter) {
+	if (filter === 'Boys hostel') {
+		return 'boys-hostel';
+	}
+	if (filter === 'Girls hostel') {
+		return 'girls-hostel';
+	}
+	if (filter === 'Campus') {
+		return 'campus';
+	}
+	return null;
+}
+
+function resolveComplaintType(hostelArea, problemType) {
+	if (hostelArea === 'Room') {
+		return 'room';
+	}
+	if (hostelArea === 'Dining Hall') {
+		return 'dining-hall';
+	}
+	return PROBLEM_TYPE_MAP[problemType] || 'other';
+}
+
+function buildDescription({ description, problemType, house, place, hostelArea }) {
+	const parts = [description.trim()];
+
+	if (problemType) {
+		parts.unshift(`Category: ${problemType}`);
+	}
+	if (house) {
+		parts.unshift(`House: ${house}`);
+	}
+	if (hostelArea && place !== 'Campus') {
+		parts.unshift(`Area: ${hostelArea}`);
+	}
+	return parts.filter(Boolean).join('\n');
+}
+
+function formatStatus(status) {
+	if (!status) {
+		return 'Pending';
+	}
+	return status
+		.split('-')
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+}
+
+function formatDate(value) {
+	if (!value) {
+		return '';
+	}
+	return new Date(value).toLocaleString();
+}
+
+async function initPage() {
+	if (!CampusAPI.requireAuth('complain.html')) {
+		return;
+	}
+
+	setLoading(true);
+
+	try {
+		const user = await CampusAPI.fetchProfile();
+		prefillUserFields(user);
+		complaints = await CampusAPI.fetchMyComplaints();
+		renderComplaints();
+	} catch (error) {
+		if (error.status === 401) {
+			CampusAPI.clearAuth();
+			CampusAPI.requireAuth('complain.html');
+			return;
+		}
+		showMessage(CampusAPI.formatApiError(error), true);
+	} finally {
+		setLoading(false);
+	}
+}
+
+function prefillUserFields(user) {
+	if (!user) {
+		return;
+	}
+
+	const nameInput = document.getElementById('name');
+	const emailInput = document.getElementById('email');
+
+	if (nameInput && !nameInput.value) {
+		nameInput.value = user.name || '';
+	}
+	if (emailInput && !emailInput.value) {
+		emailInput.value = user.email || '';
+	}
+}
+
+function setLoading(isLoading) {
+	if (loadingState) {
+		loadingState.hidden = !isLoading;
+	}
+	if (complaintList) {
+		complaintList.style.opacity = isLoading ? '0.5' : '1';
+	}
+}
 
 openFormBtn.addEventListener('click', () => {
 	openForm();
@@ -101,39 +237,62 @@ filterButtons.forEach((button) => {
 	});
 });
 
-complaintForm.addEventListener('submit', (event) => {
+complaintForm.addEventListener('submit', async (event) => {
 	event.preventDefault();
 
 	const place = placeInput.value;
 	const house = houseInput.value;
-	const complaint = {
-		id: Date.now(),
-		name: document.getElementById('name').value.trim(),
-		email: document.getElementById('email').value.trim(),
-		place,
-		house,
-		hostelArea: hostelAreaInput.value,
-		roomNumber: roomNumberInput.value.trim(),
-		problemType: document.getElementById('problemType').value,
-		title: document.getElementById('title').value.trim(),
-		description: document.getElementById('description').value.trim(),
-		status: 'Pending',
-		image: selectedPhoto,
-		createdAt: new Date().toLocaleString()
-	};
+	const hostelArea = hostelAreaInput.value;
+	const problemType = document.getElementById('problemType').value;
+	const type = resolveComplaintType(hostelArea, problemType);
+	const area = mapPlaceToArea(place);
+	const roomNumber = roomNumberInput.value.trim();
+	const title = document.getElementById('title').value.trim();
+	const description = document.getElementById('description').value.trim();
 
-	complaints.unshift(complaint);
-	saveComplaints();
-	activeFilter = 'All';
-	setActiveFilterButton();
-	renderComplaints();
-	resetForm();
-	closeForm();
+	if (type === 'room' && !roomNumber) {
+		showMessage('Room number is required for room complaints.', true);
+		return;
+	}
 
-	message.textContent = 'Complaint submitted successfully.';
-	setTimeout(() => {
-		message.textContent = '';
-	}, 2500);
+	const submitButton = complaintForm.querySelector('.submit-btn');
+	submitButton.disabled = true;
+	showMessage('Submitting complaint...', false);
+
+	const photoFile = photoInput.files[0] || null;
+
+	try {
+		await CampusAPI.createComplaint(
+			{
+				name: document.getElementById('name').value.trim(),
+				email: document.getElementById('email').value.trim(),
+				title,
+				type,
+				area,
+				roomNumber: type === 'room' ? roomNumber : undefined,
+				description: buildDescription({
+					description,
+					problemType,
+					house,
+					place,
+					hostelArea,
+				}),
+			},
+			photoFile
+		);
+
+		complaints = await CampusAPI.fetchMyComplaints();
+		activeFilter = 'All';
+		setActiveFilterButton();
+		renderComplaints();
+		resetForm();
+		closeForm();
+		showMessage('Complaint submitted successfully.', false);
+	} catch (error) {
+		showMessage(CampusAPI.formatApiError(error), true);
+	} finally {
+		submitButton.disabled = false;
+	}
 });
 
 function openForm() {
@@ -149,18 +308,10 @@ function closeForm() {
 	document.body.style.overflow = '';
 }
 
-function loadComplaints() {
-	const savedComplaints = localStorage.getItem(STORAGE_KEY);
-	return savedComplaints ? JSON.parse(savedComplaints) : [];
-}
-
-function saveComplaints() {
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(complaints));
-}
-
 function renderComplaints() {
+	const areaFilter = mapFilterToArea(activeFilter);
 	const visibleComplaints = complaints.filter((complaint) => {
-		return activeFilter === 'All' || complaint.place === activeFilter;
+		return activeFilter === 'All' || complaint.area === areaFilter;
 	});
 
 	complaintList.innerHTML = '';
@@ -177,8 +328,10 @@ function createComplaintCard(complaint) {
 
 	const image = document.createElement('img');
 	image.className = 'complaint-photo';
-	image.src = complaint.image || placeholderImage();
-	image.alt = `${complaint.title} complaint photo`;
+	image.src = complaint.imageUrl
+		? CampusAPI.resolveAssetUrl(complaint.imageUrl)
+		: placeholderImage();
+	image.alt = `${complaint.title} complaint`;
 
 	const content = document.createElement('div');
 	content.className = 'complaint-content';
@@ -191,22 +344,22 @@ function createComplaintCard(complaint) {
 	title.textContent = complaint.title;
 
 	const status = document.createElement('span');
-	status.className = 'status';
-	status.textContent = complaint.status;
+	status.className = `status status-${(complaint.status || 'pending').replace(/\s+/g, '-')}`;
+	status.textContent = formatStatus(complaint.status);
 
 	const meta = document.createElement('div');
 	meta.className = 'meta';
 
 	const place = document.createElement('span');
 	place.className = 'pill';
-	place.textContent = getComplaintLocation(complaint);
+	place.textContent = AREA_LABELS[complaint.area] || complaint.area;
 
 	const problemType = document.createElement('span');
 	problemType.className = 'pill';
-	problemType.textContent = complaint.problemType;
+	problemType.textContent = formatStatus(complaint.type);
 
 	const createdAt = document.createElement('span');
-	createdAt.textContent = complaint.createdAt;
+	createdAt.textContent = formatDate(complaint.createdAt);
 
 	const description = document.createElement('p');
 	description.className = 'description';
@@ -229,6 +382,7 @@ function resetForm() {
 	roomField.hidden = true;
 	roomNumberInput.required = false;
 	clearPhoto();
+	prefillUserFields(CampusAPI.getUser());
 }
 
 function clearPhoto() {
@@ -244,30 +398,19 @@ function setActiveFilterButton() {
 	});
 }
 
-function getComplaintLocation(complaint) {
-	if (complaint.house) {
-		return `${complaint.place} - ${complaint.house}`;
-	}
-
-	if (complaint.hostelArea === 'Room' && complaint.roomNumber) {
-		return `${complaint.place} - Room ${complaint.roomNumber}`;
-	}
-
-	if (complaint.hostelArea) {
-		return `${complaint.place} - ${complaint.hostelArea}`;
-	}
-
-	return complaint.place;
-}
-
 function placeholderImage() {
-	return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+	return (
+		'data:image/svg+xml;charset=UTF-8,' +
+		encodeURIComponent(`
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360">
 			<rect width="480" height="360" fill="#e2e8f0"/>
 			<rect x="72" y="88" width="336" height="184" rx="16" fill="#cbd5e1"/>
 			<circle cx="174" cy="154" r="34" fill="#94a3b8"/>
 			<path d="M104 246l86-70 54 48 42-38 90 60z" fill="#64748b"/>
-			<text x="240" y="312" text-anchor="middle" font-family="Arial" font-size="24" fill="#475569">No Photo</text>
+			<text x="240" y="312" text-anchor="middle" font-family="Arial" font-size="24" fill="#475569">Campus Problem</text>
 		</svg>
-	`);
+	`)
+	);
 }
+
+initPage();
