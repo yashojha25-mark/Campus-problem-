@@ -1,5 +1,4 @@
 (function () {
-    const THEME_STORAGE_KEY = "campusTheme";
     const LANGUAGE_STORAGE_KEY = "campusLanguage";
     const NAV_ITEMS = [
         { href: "index.html", key: "home" },
@@ -21,7 +20,7 @@
                 contact: "Contact"
             },
             ui: {
-                signIn: "Sign In",
+                login: "Login",
                 signUp: "Sign Up",
                 dark: "Dark",
                 light: "Light",
@@ -227,7 +226,7 @@
                 contact: "संपर्क"
             },
             ui: {
-                signIn: "साइन इन",
+                login: "लॉगिन",
                 signUp: "साइन अप",
                 dark: "डार्क",
                 light: "लाइट",
@@ -468,10 +467,6 @@
         return window.location.pathname.split("/").pop() || "index.html";
     }
 
-    function getSavedTheme() {
-        return localStorage.getItem(THEME_STORAGE_KEY) || "light";
-    }
-
     function getSavedLanguage() {
         const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
         return saved === "hi" ? "hi" : "en";
@@ -570,7 +565,7 @@
                 <button class="language-link language-toggle" type="button" aria-label="${state.language === "en" ? lookup("ui.switchToHindi") : lookup("ui.switchToEnglish")}">
                     ${lookup("ui.languageToggle")}
                 </button>
-                <a class="auth-link signin-link" href="login.html">${lookup("ui.signIn")}</a>
+                <a class="auth-link signin-link" href="login.html">${lookup("ui.login")}</a>
                 <a class="auth-link hp-signup" href="signup.html">${lookup("ui.signUp")}</a>
             </div>
         `;
@@ -662,6 +657,33 @@
         }
     }
 
+    function syncHeaderActions(header) {
+        if (!header) {
+            return;
+        }
+
+        const container = header.querySelector(".container");
+        const navigation = header.querySelector("nav");
+        const actions = header.querySelector(".hp-auth");
+
+        if (!container || !navigation || !actions) {
+            return;
+        }
+
+        const isCompact = window.matchMedia("(max-width: 980px)").matches;
+
+        if (isCompact) {
+            if (actions.parentElement !== navigation) {
+                navigation.appendChild(actions);
+            }
+            return;
+        }
+
+        if (actions.parentElement !== container) {
+            container.appendChild(actions);
+        }
+    }
+
     function updateNavbarText() {
         const header = document.querySelector(".site-header");
 
@@ -683,6 +705,9 @@
         const themeText = header.querySelector(".theme-text");
         const themeIcon = header.querySelector(".theme-icon");
         const languageToggle = header.querySelector(".language-toggle");
+        const signInLink = header.querySelector(".signin-link");
+        const signUpLink = header.querySelector(".hp-signup");
+        const currentPage = getCurrentPage();
 
         if (themeToggle) {
             const isDark = document.body.classList.contains("dark-mode");
@@ -703,6 +728,14 @@
                 "aria-label",
                 state.language === "en" ? lookup("ui.switchToHindi") : lookup("ui.switchToEnglish")
             );
+        }
+
+        if (signInLink) {
+            signInLink.textContent = lookup("ui.login");
+        }
+
+        if (signUpLink) {
+            signUpLink.textContent = lookup("ui.signUp");
         }
     }
 
@@ -1066,7 +1099,9 @@
         state.language = language === "hi" ? "hi" : "en";
         localStorage.setItem(LANGUAGE_STORAGE_KEY, state.language);
         applyPageTranslations();
-        window.dispatchEvent(new CustomEvent("campus-language-change", { detail: { language: state.language } }));
+        const languageEvent = new CustomEvent("campus-language-change", { detail: { language: state.language } });
+        window.dispatchEvent(languageEvent);
+        document.dispatchEvent(new CustomEvent("campus-language-change", { detail: { language: state.language } }));
     }
 
     function getToggle() {
@@ -1105,7 +1140,6 @@
             text.textContent = isDark ? lookup("ui.light") : lookup("ui.dark");
         }
 
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
         updateNavbarText();
     }
 
@@ -1210,14 +1244,19 @@
         const header = injectNavbar();
 
         wireNavbarInteractions(header || document.querySelector(".site-header"));
+        syncHeaderActions(header || document.querySelector(".site-header"));
         addBackButton();
         applyPageTranslations();
         addMotionClasses();
-        applyTheme(getSavedTheme());
+        applyTheme("light");
 
         const toggle = getToggle();
         toggle.addEventListener("click", function () {
             applyTheme(document.body.classList.contains("dark-mode") ? "light" : "dark");
+        });
+
+        window.addEventListener("resize", () => {
+            syncHeaderActions(document.querySelector(".site-header"));
         });
     }
 

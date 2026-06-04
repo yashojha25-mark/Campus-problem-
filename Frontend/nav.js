@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeIcon = document.querySelector(".theme-icon");
   const themeText = document.querySelector(".theme-text");
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  const savedTheme = localStorage.getItem("campusTheme") || "light";
 
   function closeNavigation() {
     document.body.classList.remove("nav-open");
@@ -28,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
       themeText.textContent = isDark ? "Light" : "Dark";
     }
 
-    localStorage.setItem("campusTheme", theme);
   }
 
   navLinks.forEach((link) => {
@@ -56,5 +54,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  applyTheme(savedTheme);
+  applyTheme("light");
 });
