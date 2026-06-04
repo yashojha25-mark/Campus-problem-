@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Campus Complaints</title>
+	<link rel="stylesheet" href="complain.css">
+</head>
+<body>
+	<main class="page">
+		<section class="complaints-panel">
+			<div class="panel-header">
+				<div>
+					<p class="eyebrow">Complaint Desk</p>
+					<h1>Campus Problems</h1>
+				</div>
+				<button type="button" class="primary-action" id="openFormBtn">Write Complaint</button>
+			</div>
+
+			<div class="filters" aria-label="Complaint filters">
+				<button type="button" class="filter-btn active" data-filter="All">All</button>
+				<button type="button" class="filter-btn" data-filter="Campus">Campus</button>
+				<button type="button" class="filter-btn" data-filter="Boys hostel">Boys Hostel</button>
+				<button type="button" class="filter-btn" data-filter="Girls hostel">Girls Hostel</button>
+			</div>
+
+			<div class="empty-state" id="emptyState" hidden>
+				<h2>No complaints yet</h2>
+				<p>Jab complaint submit hogi, yahin title, description, photo aur status ke saath dikh jayegi.</p>
+			</div>
+
+			<div class="complaint-list" id="complaintList"></div>
+		</section>
+
+		<div class="modal-backdrop" id="modalBackdrop" hidden></div>
+
+		<aside class="form-panel" id="formPanel" aria-label="Complaint form" hidden>
+			<div class="form-header">
+				<div>
+					<p class="eyebrow">New Complaint</p>
+					<h2>Submit Problem</h2>
+				</div>
+				<button type="button" class="close-btn" id="closeFormBtn" aria-label="Close form">x</button>
+			</div>
+
+			<form id="complaintForm" class="form">
+				<label>
+					Name
+					<input type="text" id="name" name="name" placeholder="Your name" required>
+				</label>
+
+				<label>
+					Email
+					<input type="email" id="email" name="email" placeholder="Your email" required>
+				</label>
+
+				<label>
+					Place
+					<select id="place" name="place" required>
+						<option value="">Select place</option>
+						<option value="Campus">Campus</option>
+						<option value="Boys hostel">Boys hostel</option>
+						<option value="Girls hostel">Girls hostel</option>
+					</select>
+				</label>
+
+				<label id="houseField" hidden>
+					Campus House
+					<select id="house" name="house">
+						<option value="">Select house</option>
+						<option value="Malhar House">Malhar House</option>
+						<option value="Bhairav House">Bhairav House</option>
+						<option value="Bageshree House">Bageshree House</option>
+					</select>
+				</label>
+
+				<label id="hostelAreaField" hidden>
+					Hostel Area
+					<select id="hostelArea" name="hostelArea">
+						<option value="">Select area</option>
+						<option value="Dining Hall">Dining Hall</option>
+						<option value="Room">Room</option>
+					</select>
+				</label>
+
+				<label id="roomField" hidden>
+					Room Number
+					<input type="text" id="roomNumber" name="roomNumber" placeholder="Room number">
+				</label>
+
+				<label>
+					Problem Type
+					<select id="problemType" name="problemType" required>
+						<option value="">Select problem</option>
+						<option value="Water leakage">Water leakage</option>
+						<option value="Fan not working">Fan not working</option>
+						<option value="Electricity issues">Electricity issues</option>
+						<option value="WiFi issues">WiFi issues</option>
+						<option value="Cleanliness concerns">Cleanliness concerns</option>
+						<option value="Furniture damage">Furniture damage</option>
+						<option value="Other">Other</option>
+					</select>
+				</label>
+
+				<label>
+					Title
+					<input type="text" id="title" name="title" placeholder="Short complaint title" required>
+				</label>
+
+				<label>
+					Description
+					<textarea id="description" name="description" placeholder="Problem detail likho..." rows="5" required></textarea>
+				</label>
+
+				<label>
+					Upload Photo
+					<input type="file" id="photo" name="photo" accept="image/*">
+				</label>
+
+				<div class="photo-preview" id="photoPreview" hidden>
+					<img id="previewImage" alt="Selected complaint preview">
+					<button type="button" id="removePhotoBtn">Remove photo</button>
+				</div>
+
+				<button type="submit" class="submit-btn">Submit Complaint</button>
+				<p id="message" class="message" aria-live="polite"></p>
+			</form>
+		</aside>
+	</main>
+
+	<script src="complain.js"></script>
+</body>
+</html>
