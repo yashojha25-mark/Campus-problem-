@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="icon">📑</div>
+
+        <h1>Feedback Form</h1>
+        <p>Write your feedback here</p>
+
+        <div id="successMessage" class="success-message">
+            🎉 Feedback Submitted Successfully!
+        </div>
+
+        <form id="Feedbackform">
+
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label>Title</label>
+            <input type="text" id="title" placeholder="Enter feedback title" required>
+
+            <label>Description</label>
+            <textarea id="description" placeholder="Write your feedback here..." maxlength="2000" required></textarea>
+
+            <div class="counter">
+                <span id="charCount">0</span>/2000 Characters
+            </div>
+
+            <small class="info">
+                Maximum 2000 characters allowed
+            </small>
+
+            <button type="submit">➤ Send Feedback </button>
+
+        </form>
+
+    </div>
+
+    <script src="feedback.js"></script>
+
+</body>
+</html>
