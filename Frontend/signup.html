@@ -5,9 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="common.css">
 
 </head>
-<body>
+<body class="shared-layout">
+    <header class="site-header">
+        <div class="container">
+          <a class="brand" href="index.html" aria-label="NavGurukul home">
+            <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
+          </a>
+
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+          <nav id="navigation">
+            <div class="nav-panel-top">
+                <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
+                <button class="menu-close" type="button" aria-label="Close navigation">×</button>
+            </div>
+
+            <ul class="nav-list hp-nav-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="index.html#navgurukul-photos">Explore</a></li>
+              <li><a href="complain.html">Complain</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="hp-auth">
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <span class="theme-icon" aria-hidden="true">☾</span>
+                <span class="theme-text">Dark</span>
+            </button>
+            <a class="language-link" href="faq.html">Hindi</a>
+            <a class="auth-link signin-link" href="login.html">Sign In</a>
+            <a href="signup.html" class="auth-link hp-signup">Sign Up</a>
+          </div>
+        </div>
+    </header>
     <div class="signup">
 
         <h2>Sign Up</h2>
@@ -42,6 +76,22 @@
 
     </div>
 
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
+            <span>Campus Problem Solver</span>
+        </div>
+        <p>Helping students report and track campus issues with clarity.</p>
+        <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script src="nav.js"></script>
 <script src="login.js"></script>
 </body>
 </html>
