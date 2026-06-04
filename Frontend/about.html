@@ -3,46 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About us</title>
+    <title>About Us</title>
     <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="theme.css">
 </head>
- <body>
- <section class="about-section">
-    <div class="container">
-   
-   <div class="about-header">
-     <h2>About Our Complaint Portal</h2>
-     <p>We are dedicated to resolving your issues quickly, fairly, and transparently.</p>
-   </div>
+<body>
+    <main class="about-page">
+        <section class="about-hero">
+            <div class="about-hero__content reveal">
+                <span class="eyebrow">About the Portal</span>
+                <h1>Built for faster campus support.</h1>
+                <p class="lead">
+                    Report hostel or campus issues, track progress, and get clear updates without the
+                    back-and-forth.
+                </p>
 
-   <div class="features-grid">
-     <div class="feature-card">
-       <h3> Secure</h3>
-       <p>Your personal information and complaints are kept strictly confidential.</p>
-     </div>
+                <div class="hero-actions">
+                    <a class="primary-action" href="complain.html">Report a Problem</a>
+                    <a class="secondary-action" href="#process">See How It Works</a>
+                </div>
 
-     <div class="feature-card">
-       <h3> Fast Action</h3>
-       <p>Complaints are immediately sent to the right department for review.</p>
-     </div>
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <strong>3</strong>
+                        <span>simple steps from issue to resolution</span>
+                    </article>
+                    <article class="stat-card">
+                        <strong>24/7</strong>
+                        <span>ready whenever a student needs help</span>
+                    </article>
+                    <article class="stat-card">
+                        <strong>100%</strong>
+                        <span>focused on transparency and follow-up</span>
+                    </article>
+                </div>
+            </div>
 
-     <div class="feature-card">
-       <h3> Transparent</h3>
-       <p>Track the real-time status of your ticket from start to finish.</p>
-     </div>
-   </div>
+            <aside class="about-hero__visual reveal">
+                <div class="visual-card">
+                    <img src="images/group photo.jpeg" alt="NavGurukul students group photo">
+                    <div class="visual-card__overlay">
+                        <p>Built for hostel and campus support at NavGurukul.</p>
+                    </div>
+                </div>
+            </aside>
+        </section>
 
-   <div class="process-box">
-     <h3>How It Works</h3>
-     <ol class="process-list">
-       <li><strong>Submit:</strong> Fill out the form with your issue details.</li>
-       <li><strong>Review:</strong> Our team investigates and updates your ticket status.</li>
-       <li><strong>Resolve:</strong> We provide a solution and close the case.</li>
-     </ol>
-   </div>
+        <section class="story-section">
+            <div class="section-heading reveal">
+                <span>Why it exists</span>
+                <h2>A simple place to raise campus issues</h2>
+                <p>
+                    Students should not have to guess who to contact or where their complaint is stuck.
+                    This portal keeps the process clear and direct.
+                </p>
+            </div>
 
- </div>
-  </section>
-  <script src="about.js" defer></script>
- </body>
+            <div class="feature-grid">
+                <article class="feature-card reveal">
+                    <div class="feature-icon">01</div>
+                    <h3>Private</h3>
+                    <p>Your details stay protected, so you can report issues with confidence.</p>
+                </article>
+
+                <article class="feature-card reveal">
+                    <div class="feature-icon">02</div>
+                    <h3>Quick Action</h3>
+                    <p>Complaints reach the right support team quickly for review and response.</p>
+                </article>
+
+                <article class="feature-card reveal">
+                    <div class="feature-icon">03</div>
+                    <h3>Transparent</h3>
+                    <p>Track your complaint clearly and know what is happening at each stage.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="process-section" id="process">
+            <div class="section-heading reveal">
+                <span>How it works</span>
+                <h2>From complaint to resolution in three steps</h2>
+                <p>
+                    The flow is intentionally simple so students can submit problems without confusion.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <article class="timeline-item reveal">
+                    <span class="timeline-step">01</span>
+                    <div>
+                        <h3>Submit</h3>
+                        <p>Fill out the form with your hostel or campus issue and share the important details.</p>
+                    </div>
+                </article>
+
+                <article class="timeline-item reveal">
+                    <span class="timeline-step">02</span>
+                    <div>
+                        <h3>Review</h3>
+                        <p>The support team checks the complaint and updates the progress when action starts.</p>
+                    </div>
+                </article>
+
+                <article class="timeline-item reveal">
+                    <span class="timeline-step">03</span>
+                    <div>
+                        <h3>Resolve</h3>
+                        <p>Once the issue is handled, the case is closed with a clear outcome.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="promise-section reveal">
+            <div class="promise-card">
+                <div>
+                    <span class="eyebrow">Our Promise</span>
+                    <h2>Less friction. More action. Better campus support.</h2>
+                </div>
+                <p>
+                    We want this portal to feel calm, trustworthy, and practical for every student who needs
+                    help.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script src="about.js" defer></script>
+    <script src="theme.js"></script>
+</body>
 </html>

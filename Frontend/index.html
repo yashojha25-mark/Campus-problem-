@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus-Problem</title>
     <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="theme.css">
 </head>
 <body>
     <section class="hero">
@@ -26,7 +27,7 @@
         <ul class="nav-list hp-nav-list">
           <li><a class="active" href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="#navgurukul-photos">Explore</a></li>
+          <li><a href="explore.html">Explore</a></li>
           <li><a href="complain.html">Complain</a></li>
           <li><a href="feedback.html">Feedback</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -37,30 +38,12 @@
             <span class="theme-icon" aria-hidden="true">☾</span>
             <span class="theme-text">Dark</span>
         </button>
-        <a class="language-link" href="faq.html">Hindi</a>
-        <a class="auth-link signin-link" href="contact.html">Sign In</a>
-        <a href="booking.html" class="auth-link hp-signup">Sign Up</a>
+        <button class="language-link language-toggle" type="button" aria-label="Switch to Hindi">Hindi</button>
+        <a class="auth-link signin-link" href="login.html">Sign In</a>
+        <a href="signup.html" class="auth-link hp-signup">Sign Up</a>
       </div>
     </div>
   </header>
-
-    <aside class="hero-sidebar" aria-label="Problem desk highlights">
-        <img src="images/Navgurukul_img-removebg-preview.png" alt="NavGurukul">
-        <div class="sidebar-item">
-            <span>01</span>
-            <strong>Choose Area</strong>
-        </div>
-        <div class="sidebar-item">
-            <span>02</span>
-            <strong>Select Problem</strong>
-        </div>
-        <div class="sidebar-item">
-            <span>03</span>
-            <strong>Track Support</strong>
-        </div>
-    </aside>
-
-    <button class="arrow left">&#10094;</button>
 
     <div class="hero-content">
         <div class="hero-text-box">
@@ -85,28 +68,6 @@
         </div>
     </div>
 
-    <aside class="hero-rail" aria-label="Campus photos">
-        <button class="rail-thumb active" type="button" data-slide="0">
-            <img src="images/WhatsApp Image 2026-06-04 at 3.45.20 PM.jpeg" alt="NavGurukul campus view">
-        </button>
-        <button class="rail-thumb" type="button" data-slide="1">
-            <img src="images/WhatsApp Image 2026-06-04 at 3.45.21 PM.jpeg" alt="NavGurukul campus building">
-        </button>
-        <button class="rail-thumb" type="button" data-slide="2">
-            <img src="images/Boys hostal.jpeg" alt="Boys hostel">
-        </button>
-        <button class="rail-thumb" type="button" data-slide="3">
-            <img src="images/WhatsApp_Image_2025-10-31_at_9.51.16_PM.jpeg" alt="Campus activity">
-        </button>
-        <button class="rail-thumb" type="button" data-slide="4">
-            <img src="images/IMG_20260304_114313.webp" alt="Student activity">
-        </button>
-        <button class="rail-thumb" type="button" data-slide="5">
-            <img src="images/IMG-20260425-WA0004.webp" alt="Campus life">
-        </button>
-    </aside>
-
-    <button class="arrow right">&#10095;</button>
 </section>
 
 <main class="problem-section" id="problem-options">
@@ -212,5 +173,6 @@
 </section>
 
     <script src="index.js"></script>
+    <script src="theme.js"></script>
 </body>
 </html>
